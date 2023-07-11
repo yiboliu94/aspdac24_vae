@@ -1,0 +1,146 @@
+\documentclass[journal]{IEEEtran}
+% \usepackage{booktabs} % For formal tables
+% \usepackage{times}
+% \renewcommand{\rmdefault}{ptm}
+\usepackage{multirow}
+% \usepackage{array}
+\usepackage{amsmath}
+\usepackage{subfigure}
+% \usepackage{bm}
+% \usepackage{amsfonts}
+\usepackage{epsfig}
+\usepackage{psfrag}
+% \usepackage{epstopdf}
+%\usepackage{cite}
+%\usepackage{url}
+\newcounter{numberlistc}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{subfigure}
+\usepackage{color}
+\usepackage{spverbatim}
+\usepackage{setspace}
+\usepackage{caption}
+%\usepackage{subcaption}
+
+\newenvironment{numberlist}
+    {   \setcounter{numberlistc}{0}
+        \begin{list}{\arabic{numberlistc}.}
+        {\usecounter{numberlistc}
+        \setlength{\parsep}{0pt}
+        \setlength{\topsep}{3pt}
+        \setlength{\itemsep}{0pt}}
+        }{ \end{list} }
+\newcounter{itemlistc}
+\newcounter{enumlistc}
+%\renewcommand{\theromanlistc}{(\roman{romanlistc})} %for ref use
+%\renewcommand{\thealphlistc}{(\alph{alphlistc})}    %for ref use
+\newenvironment{itemlist}
+    {   \setcounter{itemlistc}{0}
+    \begin{list}{$\bullet$}
+        {\usecounter{itemlistc}
+        \setlength{\parsep}{0pt}
+        \setlength{\topsep}{3pt}
+        \setlength{\itemsep}{0pt}}
+        }{ \end{list} } 
+
+\newcommand{\rev}[1]{\textcolor{red}{#1}}
+
+\renewcommand{\baselinestretch}{1}
+
+% \newenvironment{packedenum}{
+% \begin{enumerate}
+% \setlength{\itemsep}{1pt}
+% \setlength{\parskip}{0pt}
+% \setlength{\parsep}{0pt}
+% }{\end{enumerate}}
+
+%\usepackage{setspace}
+%\DeclareMathOperator{\rank}{rank}
+
+
+%\renewcommand{\baselinestretch}{0.895}
+%\IEEEoverridecommandlockouts
+%\usepackage[font=small, labelfont=bf]{caption}
+%\usepackage{caption}
+
+
+%\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+%\renewcommand{\algorithmicensure}{\textbf{Output:}}
+%\renewcommand{\algorithmiccomment}[1]{~~~~\textcolor{BrickRed}{// \textit{#1}}}
+
+
+\begin{document}
+\title{ EM-Aware Power Grid IR Drop Fixing Accelerated by Variational AutoEncoder}
+
+%\author{\indent Yibo Liu~\IEEEmembership{Student Member,~IEEE}, 
+%Sheldon X.-D. Tan~\IEEEmembership{Senior Member,~IEEE} 
+%~\thanks{\indent Yibo Liu, and Sheldon X.-D. Tan are with the Department of Electrical and 
+%Computer Engineering, University of California, Riverside, Riverside, CA 92521, USA~(e-mail: stan@ece.ucr.edu).}}
+
+
+\maketitle
+  
+\begin{abstract}
+  Electromigration (EM) remains the top failure mechanism for
+  copper-interconnected deep sub-micro technologies. This paper
+  presents a full-chip EM-aware IR drop fixing method for on-chip power
+  grid networks Accelerated by Variational AutoEncoder. We proposed a
+  Variational AutoEncoder (VAE) accelerated power grid IR drop fixing framework, in which the
+  sensitivity computation for the sequence of linear programming (SLP)
+  is accelerated by VAE-based machine learning method instead of traditional
+  numerical methods.
+
+
+  We also show that the proposed method can lead up to 90X
+  (at least one order of magnitude) speedup over the conventional
+  SLP-based method on synthesized power grid benchmarks
+  from ARM Cortex-M0 processor designs. Furthermore, compared to the
+  recently proposed generative adversarial network (GAN) accelerated conjugate gradient-based
+  optimization method, the proposed method can still lead to 2-8X
+  speedup on the synthesized power grid networks with higher accuracy in terms of 40$\%$ RMSE reduction in mV.
+
+
+
+
+\end{abstract}
+ 
+\input intro.tex
+
+\input related.tex
+
+\input strategy.tex
+
+\input results.tex
+
+\section{Conclusion}
+\label{sec:conclusion}
+In this paper, we proposed a VAE accelerated power grid
+fixing method based on a recently proposed linear programming based
+optimization framework.  But instead of using the numerical matrix
+solving method for obtaining the sensitivity information, which is
+computationally slow and does not scale well for more violations, we
+proposed to use the VAE-based model to accelerate sensitivity
+computation.  Numerical results on a number of synthesized power grid
+benchmarks from ARM Cortex-M0 processor designs show that the proposed
+method can lead to at least one order of magnitude speedup over the
+existing SLP based method. Compared to recently proposed
+DNN-accelerated conjugate gradient based optimization method the
+proposed method can lead to up to 8X speedup on the synthesized power
+grid networks.
+
+
+
+
+
+% \clearpage 
+\bibliographystyle{IEEEtran}
+\bibliography{../../bib/simulation,../../bib/modeling,../../bib/reduction,../../bib/misc,../../bib/mscad_pub,../../bib/reliability,../../bib/interconnect,../../bib/thermal_power,../../bib/machine_learning,../../bib/physical,../../bib/neural_network}
+%\bibliography{bibfile}
+%\input change_note.tex
+% \input {bio.tex}
+
+\end{document}
