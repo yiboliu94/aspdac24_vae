@@ -1,39 +1,51 @@
-\section{Related works}
++\section{Related works}
 \label{sec:related}
 
-In this section, we first summarize some related preliminary works on physics-based EM analysis. Then we review the conventional EM-induced IR drop prediction methods and recent machine learning-based approaches.
-
-% \subsection{Electromigration overview}
-% \label{subsec:em}
-% EM is a diffusion phenomenon of the migration of metal atoms due to several driving forces.  During migration, when the hydrostatic stress inside the embedded metal wire reaches the critical level, a void and a hillock will be formed by conducting electrons at the cathode end and the anode end.
-
-% Some traditional EM models are developed based on empirical data. Black’s equation \cite{Black:1969fc} and Blech limit \cite{Blech:1976ko} are still employed in the industry. But there are growing criticism for the over-conservation of those models~\cite{}
-
-% Recent studies show that large temperature gradient due to Joule heating may have huge impacts on the EM-induced failure effects, which can be the same magnitude as EM~\cite{Abbasinasab:DAC'2018,Guo:ICSSICTP'1998,Tu:JAP'19,KavousiTan:ICCAD'20}.  However, Joule heating and related TM effects were ignored in the existing EM-aware power grid fixing and optimization flow. 
+In this section, we first summarize and review some related preliminary works of on-chip power grid EM-induced IR drop analysis and mitigation approaches.
 
 \subsection{Full-chip EM-induced IR drop analysis}
 \label{subsec:emspice}
-As mentioned in the previous section, EM is a physical phenomenon that can lead to resistance increase or even open-wire segments.  The on-chip power grid is a mesh-structured network. The IR drop of the power grid wires may change due to the EM-induced aging effect. With enough wires nucleate, the EM-induced IR drop eventually leads to timing violations. This means we have to consider the power girds IR drop as time-varying characters ~\cite{SunYu:TDMR'20, Huang:TCAD'15, Chatterjee:2018TCAD,SukharevNajm:2018TDMR}. In fact, the resistance change of the wires affected by the EM-induced aging effect will have a further impact on the power grid current distribution of all the interconnect wires, especially those failed wire segments, which may further accelerate the failure process. Hence,  The EM assessment has to evaluate the interplay between electrical characteristics and hydrostatic stress in the interconnect wires. 
+As mentioned in the previous section, EM is a physical phenomenon that can lead to resistance increase or even open-wire segments.  The IR drop of the power grid wires may change due to the EM-induced aging effect. With enough wires nucleate, the EM-induced IR drop eventually leads to timing violations. This means we have to consider the power girds IR drop as time-varying characters ~\cite{SunYu:TDMR'20, Huang:TCAD'15, Chatterjee:2018TCAD,SukharevNajm:2018TDMR}. 
+On the other hand, the failed wire segments change the current distributions of all the interconnect wires, which may further accelerate the failure process. Hence, to emulate the on-chip power grid IR-drop after aging effect, one has to consider the interplay between the two physics: electrical characteristics and hydrostatic stress in the interconnect wires.
 
-As for full-chip EM assessment, current densities and temperatures in different interconnect trees should be estimated for different workloads and should be used for the prediction of TTF happening in different scenarios, including worst-case conditions for voltage drop. {\it EMspice}~\cite{SunYu:TDMR'20,EMspiceSourceCode} is an open source tool that conducts the full-chip power grid network coupled EM-IR drop simulation with the dynamic interplay between the hydrostatic stress and electronic current/voltage. It solves the coupled time-varying partial differential equations in the time domain to obtain the stress evolution, and finally reports resulted IR drop and EM failure hotspots at the target aging time.  The tool consists of a finite difference time domain (FDTD) solver for EM stress and a linear network DC solver for IR drop, which can be described as
-\begin{eqnarray}
-  % \begin{split}
-& {\bf C}\dot{\sigma}(t)  ={\bf A}\sigma(t)+{\bf P}I(t), \label{eq:korhoene_fdft}\\
-& \mathcal{V}_v(t)  = \int_{\Omega_L}\frac{\sigma(t)}{B}d\mathcal{V},  \label{eq:conserv}\\ 
-&  {\bf M}(t) \times u(t)  = {\bf P} I(t), \label{eq:mna}\\
-& {\bf \sigma}(0)  = [\sigma_1(0), \sigma_2(0), ..., \sigma_n(0)] \,\, ,at \,\, t = 0 
-%\end{split}
-%\label{eq:coupled}
-\end{eqnarray}
-Assume there are $n$ nodes in the power grid, then ${{\bf C}}$ is an $n \times n$ identity matrix and ${{\bf A}}$ is an $n \times n$ coefficient matrix. The void formation is built up in the incubation phase~\cite{TanAmrouch:2017int}, and the void volume and stress distribution of the remaining wire is correlated by the atom conservation equation in Eq.~\eqref{eq:conserv}, where $\mathcal{V}_v(t)$ is the void volume, $\Omega_L$ is the volume of the remaining interconnect wire and $\mathcal{V}$ is the volume of the wire. By using a finite difference time domain (FDTD) solver for hydrostatic stress~\cite{CookSun:TVLSI'18} in the nucleation phase, the partial differential Korhonen's equation is converted to the linear time-invariant (LTI) system as shown in Eq.~\eqref{eq:korhoene_fdft}.
+{\it EMspice}~\cite{SunYu:TDMR'20,EMspiceSourceCode} is an open source tool that conducts the full-chip power grid network coupled EM-IR drop simulation with the dynamic interplay between the hydrostatic stress and electronic current/voltage. It solves the coupled time-varying partial differential equations in the time domain to obtain the stress evolution, and finally reports resulted IR drop and EM failure hotspots at the target aging time, such as 10 years.  The tool consists of a finite difference time domain (FDTD) solver for EM stress and a linear network DC solver for IR drop, which can be described as
 
-Then the wire resistance starts to increase due to the void continuing to grow in the growth phase.  ${\bf M}(t)$ is the $n \times n$ power grid network conductance matrix. Due to the resistance change caused by the EM failure process, ${\bf M}(t)$ is time-varying. ${{\bf P}}$ is a $b \times p$ input matrix, where $p$ is the number of inputs. $u(t)$ represents the nodal voltages of the network. $I(t)$ is a column vector whose elements are the current sources from the function blocks of the chips. Note that $\sigma(0)$ denotes the initial stress at $t=0$. The resulting IR drops and EM failure hotspots are assessed by solving the above equations together. We adopt the open-source tool {\it EMspice} to conduct the EM-IR drop analysis as a simulation of the aging process and then further utilize the result from {\it EMspice} to train our DNN models.
-The above indicates that EM-induced IR drop analysis is a time-varying and iterative process that is concerned with voltage drop estimation from given current or power sources.
+%\begin{eqnarray}
+%	& {\bf C}\dot{\sigma}(t)  ={\bf A}\sigma(t)+{\bf P}I(t), \label{eq:korhoene_fdft}\\
+%	& \mathcal{V}_v(t)  = \int_{\Omega_L}\frac{\sigma(t)}{B}d\mathcal{V},  \label{eq:conserv}\\ 
+%	&  {\bf M}(t) \times u(t)  = {\bf P} I(t), \label{eq:mna}\\
+%	& {\bf \sigma}(0)  = [\sigma_1(0), \sigma_2(0), ..., \sigma_n(0)] \,\, ,at \,\, t = 0 
+%\end{eqnarray}
+
+
+\begin{align}
+	\label{eq:em}
+	\begin{split}
+		&{\bf C} \dot{\sigma}(t)  = {\bf A} \sigma(t) + {\bf P}I(t),  \\
+		&\mathcal{V}_v(t)  = \int_{\Omega_L}\frac{\sigma(t)}{B}d\mathcal{V},  \\ 
+		&{\bf M}(t) \times u(t)  = {\bf P} I(t), \\
+		&{\bf \sigma}(0)  = [\sigma_1(0), \sigma_2(0), ..., \sigma_n(0)] \,\, ,at \,\, t = 0 
+	\end{split}
+\end{align}
+
+
+
+In the above equations .~\eqref{eq:em}, ${\bf M}(t)$ is the time varying power grid conductance matrix, as the resistance changes due to the EM failure process. ${{\bf P}}$ is the input matrix and I(t) represents the current sources from the chip. ${{\bf C}}$ is the identity matrix and ${{\bf A}}$ is a coefficient matrix. $\sigma_{n}(0)$ denotes the initial stress at time step $t = 0$, for node $n$. For each new time step, the stress from previous simulation step is used as the initial condition.
+
+The above equations in .~\eqref{eq:em} are coupled and must be solved together. Linear network IR drop solver passes time-dependent current densities and P/G layout information to the finite difference time domain (FDTD) EM solver. The FDTD EM solver provides the IR drop solver with new resistance information.  these two simulations are coupled together. Such iterative coupled analysis on long target lifetime can be extremely time consuming for very large power grid networks ~\cite{SunYu:TDMR'20,EMspiceSourceCode} 
+
+
+%$n$ represents the number of power grid interconnection nodes,  ${{\bf C}}$ is an $n \times n$ identity matrix and ${{\bf A}}$ is an $n \times n$ coefficient matrix. The void formation is built up in the incubation phase~\cite{TanAmrouch:2017int}, and the void volume and stress distribution of the remaining wire is correlated by the atom conservation equation in Eq.~\eqref{eq:conserv}, where $\mathcal{V}_v(t)$ is the void volume, $\Omega_L$ is the volume of the remaining interconnect wire and $\mathcal{V}$ is the volume of the wire. By using a finite difference time domain (FDTD) solver for hydrostatic stress~\cite{CookSun:TVLSI'18} in the nucleation phase, the partial differential Korhonen's equation is converted to the linear time-invariant (LTI) system as shown in Eq.~\eqref{eq:korhoene_fdft}.
+
+%Then the wire resistance starts to increase due to the void continuing to grow in the growth phase.  ${\bf M}(t)$ is the $n \times n$ power grid network conductance matrix. Due to the resistance change caused by the EM failure process, ${\bf M}(t)$ is time-varying. ${{\bf P}}$ is a $b \times p$ input matrix, where $p$ is the number of inputs. $u(t)$ represents the nodal voltages of the network. $I(t)$ is a column vector whose elements are the current sources from the function blocks of the chips. Note that $\sigma(0)$ denotes the initial stress at $t=0$. The resulting IR drops and EM failure hotspots are assessed by solving the above equations together. We adopt the open-source tool {\it EMspice} to conduct the EM-IR drop analysis as a simulation of the aging process and then further utilize the result from {\it EMspice} to train our DNN models. The above indicates that EM-induced IR drop analysis is a time-varying and iterative process that is concerned with voltage drop estimation from given current or power sources.
+
+
+
 
 
 %There are numerical methods to conduct power grid IR drop analysis, such as hierarchical methods, random walk methods, Krylov-subspace methods, multi-grid techniques, and vector-less verification methods.
 
-\label{subsec:ml_em}
+%\label{subsec:ml_em}
 PDN design is a complex iterative optimization task that strongly influences the performance, area, and cost of a chip. To reduce the design time, recent studies have paid attention to ML-based IR drop estimation, a time-consuming sub-task~\cite{LinFang:2018vts,Fang:2018dynireco,HoKahng:ICCAD'19,Xie:2020powernet,Sachin:ASPDAC'21}. 
 %Xie {\it et al.}
 The key ideas of these methods aims to substitue the standard full-chip IR drop analysis tool to data-driven feature extraction and learning-based methods. For instance, Lin {\it et al.}~\cite{LinFang:2018vts} tried to extract power and physical features from cells and layouts to conduct the full-chip dynamic IR drop analysis . Fang {\it et al.}~\cite{Fang:2018dynireco} proposed to training the models for the localized layout region to improve the scalability.  A convolutional neural network (CNN) based model that is able to incorporate design-dependent features during pre-processing is proposed by Xie {\it et al.}~\cite{Xie:2020powernet}, which is transferable across different designs.

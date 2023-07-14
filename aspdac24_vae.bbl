@@ -21,10 +21,6 @@
 \providecommand{\BIBdecl}{\relax}
 \BIBdecl
 
-\bibitem{IRDS20}
-``{IEEE International Roadmap for Devices and Systems ({IRDS})},'' 2020,
-  http://irds.ieee.org/.
-
 \bibitem{ChBr:TCAD'88}
 S.~Chowdhury and M.~A. Breuer, ``{Optimum Design of IC Power/Ground Nets
   Subject to Reliability Constraints},'' \emph{IEEE Trans. on Computer-Aided
@@ -110,18 +106,6 @@ V.~Sukharev and F.~N. Najm, ``{Electromigration Check: Where the Design and
 ``{EMspice -- Coupled EM-IR Analysis Tool for Full-Chip Power Grid EM Check and
   Sign-off},'' 2020, \url{https://github.com/sheldonucr/EMspice}.
 
-\bibitem{TanAmrouch:2017int}
-S.~X.-D. Tan, H.~Amrouch, T.~Kim, Z.~Sun, C.~Cook, and J.~Henkel, ``{Recent
-  advances in EM and BTI induced reliability modeling, analysis and
-  optimization},'' \emph{Integration, the VLSI Journal}, vol.~60, pp. 132--152,
-  Jan. 2018.
-
-\bibitem{CookSun:TVLSI'18}
-C.~Cook, Z.~Sun, E.~Demircan, M.~D. Shroff, and S.~X.-D. Tan, ``{Fast
-  Electromigration Stress Evolution Analysis for Interconnect Trees Using
-  Krylov Subspace Method},'' \emph{IEEE Trans. on Very Large Scale Integration
-  (VLSI) Systems}, vol.~26, no.~5, pp. 969--980, May 2018.
-
 \bibitem{LinFang:2018vts}
 S.-Y. Lin, Y.-C. Fang, Y.-C. Li, Y.-C. Liu, T.-S. Yang, S.-C. Lin, C.-M. Li,
   and E.~J.-W. Fang, ``{IR Drop Prediction of ECO-Revised Circuits Using
@@ -163,12 +147,6 @@ H.~Zhou, Y.~Sun, Z.~Sun, H.~Zhao, and S.~X.-D. Tan,
   and South Pacific Design Automation Conference}}, ser. ASP-DAC '18.\hskip 1em
   plus 0.5em minus 0.4em\relax New York, NY: {IEEE Press}, Jan. 2018, pp.
   399--404.
-
-\bibitem{WenPan:SemiTherm'2020}
-J.~Wen, S.~Pan, N.~Chang, W.-T. Chuang, W.~Xia, D.~Zhu, A.~Kumar, E.-C. Yang,
-  K.~Srinivasan, and Y.-S. Li, ``Dnn-based fast static on-chip thermal
-  solver,'' in \emph{2020 36th Semiconductor Thermal Measurement, Modeling
-  Management Symposium (SEMI-THERM)}, 2020, pp. 65--75.
 
 \bibitem{Nassif:ASPDAC'08}
 S.~R. Nassif, ``Power grid analysis benchmarks,'' in \emph{Proc. Asia South
