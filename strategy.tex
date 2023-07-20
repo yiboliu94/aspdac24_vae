@@ -36,8 +36,9 @@ The Loss function for a VAE has two parts. The first is the reconstruction loss,
 The inputs include power grid conductance matrix \textit{\textbf{G}}, the current source drawn from it to other circuit layers, and a target life time \textit{\textbf{t}} as the conditional information. 
 The VAE model contain four convolutional layers and two fully-connected layers. The input is first padded to the standard size of 64 x 64 for the power grid smaller than this size. If the power grid exceeds the size of 64 x 64 but smaller than 128 x 128, then we add one more convolutional layer in both the generator and the discriminator network. For the further larger or smaller sized power grid, we follow the same routine to add or remove the convolutional layers to fit the input size.
 
-As for our VAE-based model training, first we extract the electrical information from the result of the enhanced $\it{EMspice}$. The input features of VAE model should include the node voltage $u(t)$ and $M(t)$,  the conductance matrix of the power grid network in the format of wire segment resistance vectors, which are mentioned in Eq.~\eqref{eq:mna}. 
-Suppose we are given a mesh-structured power grid network with proper topological and electrical information, the wire segment resistance can be derived from the wire length and segment width. The segment width of the mesh-structured power grid is proportional to the cross-sectional area. The trained VAE model will have the ability to predict different mesh-structured networks under same power grid topology. 
+As for our VAE-based model training, first we extract the electrical information from the result of the  $\it{EMspice}$. The input features of VAE model should include the node voltage $u(t)$ and $M(t)$,  the conductance matrix of the power grid network.
+%in the format of wire segment resistance vectors, which are mentioned in Eq.~\eqref{eq:mna}. 
+
 
 The data preprocessing before the model training is as follows. Synopsys IC compiler can automatically create the circuit layout from a synthesized gate-level netlist and a standard cell library. 
 Then we parse the electrical features and the topological information from the circuit layout.
@@ -114,21 +115,16 @@ We wish to alleviate the EM-aware IR drop failure by resizing the power grid int
 The problem can be formulated as:
 \begin{align}
 	\label{eq:prob_formulation}
-	&\mbox{Minimize} & a^{t}s \qquad   \notag  \\
+	&\mbox{Minimize}  & a^{t}s \qquad   \notag  \\
 	&s.t.     & v(t,s)\leq V_{th} \\
-	& \quad   & s \in S \quad          \notag
+	& \quad   &s \in S   \triangleq \{ s \in R^{nt}: 1 \leq s \leq s_{up} \}        \notag
 \end{align}
 
 In \eqref{eq:prob_formulation}, $a=[a_{1},a_{2},\ldots,a_{nt}] = [w_{1}l_{1},w_{2}l_{2},\ldots,w_{nt}l_{nt}]$ refers to the metal areas of power grid with $n_{t}$ trees, $w_{i}$ and $l_{i}$ are the $i_{th}$ tree's width and length separately.
-In the constraints, $s=[s_{1},s_{2},\ldots,s_{nt}]$  is the resizing factor for the power grid trees. $S$ is the feasible region defined in \eqref{eq:feasible_region}.
-\begin{equation}
-	\label{eq:feasible_region}
-S \triangleq \{ s \in R^{nt}: 1 \leq s \leq s_{up} \}
-\end{equation}
+For the constraints, $s=[s_{1},s_{2},\ldots,s_{nt}]$  is the resizing factor for the power grid trees. $S$ is the feasible region ,
 where $s_{up}$ is the upper bound for $s$. Similar to~\cite{Sukharev:2019pg}, we assume the original power grid trees are already set to its minimum width. Hence we only increase the tree width and $s \geq 1 $.
 The feasible region reflects both the basic design rules and case-by-case user requirements, such as the criteria of minimum interconnect tree width, the minimum spacing to prevent the  interconnect trees overlap, and the maximum metal area usage, etc. 
 The node IR drop $v(t,s)$  is the voltage difference between the power grid interconnect node and the power supply, its is a nonlinear function to $s$ at aging time $t$. The maximum allowable voltage drop threshold $V_{th}$ is given by user, we assumed it to be ten percents of the power supply voltage.
-
 
 
 \subsubsection{Programming-based optimization}
@@ -147,8 +143,7 @@ where $s^{(i)}$ denotes the current power grid resizing vector and $s^{(i+1)}$ i
 	s^{(i+1)} = s^{(i)} + \delta s 
 \end{equation}
 
-$ \dfrac{\partial v(t, s)}{\partial s}$ is the $n\times n_{t}$ \textit{Jacobian} matrix of $v(t,s)$ with respect to $s$, describes how the node voltage drops at target time $T=t$ respond to the resizing of power grid trees.
-
+$ \dfrac{\partial v(t, s)}{\partial s}$ is the $n\times n_{t}$ \textit{Jacobian} matrix of $v(t,s)$ with respect to $s$, describes how the node voltage drops at target time $T=t$ respond to the corresponding tree width rescaling.
 
 \begin{equation}
 	\label{eq:J_matrix}
@@ -162,9 +157,10 @@ $ \dfrac{\partial v(t, s)}{\partial s}$ is the $n\times n_{t}$ \textit{Jacobian}
 	\end{bmatrix}
 \end{equation}
 
-Each column in \eqref{eq:J_matrix} describes how will the nodes IR drop change due to the corresponding tree width rescaling. Every column has to be calculated through the entire process mentioned in \eqref{eq:dVs}. In comparison our VAE-based method constructs the \textit{Jacobian} matrix by conducting the inference procedure only once.
-We utilize the PyTorch auto differentiation to acquire the gradient of output node voltage to the input wire segment conductance, which is $ \dfrac{\partial v(t, s)}{\partial g}$. Then we can easily get \eqref{eq:J_matrix} by chain rule, as each power grid tree $g_{i}$ has its own resizing factor $s_{i}$ and will not be infected by other resizing factors:
 
+
+\subsubsection{Fast Gradient acquisition}
+PyTorch auto differentiation can provide the gradient of output node voltages to the input wire segment conductances, which is $ \dfrac{\partial v(t, s)}{\partial g}$. Then we can easily get \eqref{eq:J_matrix} by chain rule, as each power grid tree $g_{i}$ has its own resizing factor $s_{i}$ and will not be infected by other resizing factors:
 \begin{equation}
 	\label{eq:chain_rule}
 	\begin{aligned}
@@ -181,10 +177,46 @@ We utilize the PyTorch auto differentiation to acquire the gradient of output no
 
 
 
+As Comparison, we compare to the sensitivity ~\cite{Sukharev:2019pg}
+For a the power grid network represented by the node conductance matrix $ \textit{G(t,s)}$, we can write its model in the format of the following equation:
+\begin{equation}
+	\label{eq:gv=i}
+	G(t,s)\cdot v(t,s)= j(t)
+\end{equation}
+where $j(t)$  is $n\times 1$ vectors representing and node current vector for the power grid.
+
+And the sensitivity 
+\begin{equation}
+	\label{eq:dVs}
+	\dfrac{\partial v(t,s)}{\partial s_{k}} = -G^{-1}\cdot \dfrac{\partial G(t,s)}{\partial s_{k}}  \cdot G^{-1}\cdot j(t)
+\end{equation}
 
 
 
-%After we use the above chain rule to fast compute the voltage drop $Jacobian$ matrix from the $GridNet$ sensitivity information,  we linearize the voltage drop in \eqref{eq:v_taylor_expand}, and formulate the \eqref{eq:prob_formulation} as a linear programming problem. Finally We find the solution of this linear programming problem by LP solver.
+
+To solve the above equation and obtain $ \frac{\partial v(t,s)}{\partial s_{k}}$, one has to first construct the G-related matrices , and then perform expensive computational matrix solving. 
+
+%first we obtain $x = G^{-1}(t,s) \cdot j(t)$ by solving 
+ %\begin{equation}
+%   G(t,s) \cdot x = j(t)
+%   \label{eq:solving1}
+%\end{equation}
+%Then we calculate $y = \dfrac{\partial G(t,s)}{\partial s_{k}} \cdot x$. After this we solve the following equation again
+%\begin{equation}
+%	G(t,s) \cdot \dfrac{\partial v(t,s)}{\partial s_{k}} = y
+%	\label{eq:solving2}
+%\end{equation}
+
+%As we can see, we need to perform matrix solving twice in \eqref{eq:solving1} and \eqref{eq:solving2} for {\it each} power grid tree $k$. 
+Even if we only need to do one LU factorization on $G$ matrices for each $s$ value, we still need to solve back-substitutions each time for \eqref{eq:solving1} and \eqref{eq:solving2} . These are very expensive computations especially when the number of violations nodes and trees are large ($k$ is larger).
+Notice that the circuit node conductance matrix $G(t,s)$ is a sparse matrix. The sparsity remains in all the derived matrices of $G(t,s)$, such as $\dfrac{\partial G(t,s)}{\partial s_{k}}$ for all $k$.
+Thereby the circuit matrix-based method not only suffers a large computation workload during the matrix solving procedure but also undertakes a large time consumption for the circuit matrix construction as $G(t,s)$ and its derived matrices increases quadratically over the power grid node size $n$. In this work, we try to mitigate these issues by using DDN based modeling, which is much more scalable with the size of power gird and the number of violation, as will show soon in the next section. 
+
+
+Notice that each column of \eqref{eq:J_matrix} has to be calculated through the entire process described in \eqref{eq:dVs} for the corresponding power grid tree. In comparison our VAE-based method constructs the \textit{Jacobian} matrix by conducting the inference procedure only once.
+
+
+
 
 
 %We utilize the auto differentiation to calculate the sensitivity of output node voltage to the input power grid wire segment resistance, as VAE models are differentiable with respect to the model parameters. 

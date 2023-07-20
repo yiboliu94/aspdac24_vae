@@ -10,13 +10,13 @@ On the other hand, the failed wire segments change the current distributions of 
 
 {\it EMspice}~\cite{SunYu:TDMR'20,EMspiceSourceCode} is an open source tool that conducts the full-chip power grid network coupled EM-IR drop simulation with the dynamic interplay between the hydrostatic stress and electronic current/voltage. It solves the coupled time-varying partial differential equations in the time domain to obtain the stress evolution, and finally reports resulted IR drop and EM failure hotspots at the target aging time, such as 10 years.  The tool consists of a finite difference time domain (FDTD) solver for EM stress and a linear network DC solver for IR drop, which can be described as
 
-%\begin{eqnarray}
-%	& {\bf C}\dot{\sigma}(t)  ={\bf A}\sigma(t)+{\bf P}I(t), \label{eq:korhoene_fdft}\\
-%	& \mathcal{V}_v(t)  = \int_{\Omega_L}\frac{\sigma(t)}{B}d\mathcal{V},  \label{eq:conserv}\\ 
-%	&  {\bf M}(t) \times u(t)  = {\bf P} I(t), \label{eq:mna}\\
-%	& {\bf \sigma}(0)  = [\sigma_1(0), \sigma_2(0), ..., \sigma_n(0)] \,\, ,at \,\, t = 0 
-%\end{eqnarray}
-
+%\begin{align}
+%	\label{eq:em}
+%		&{\bf C} \dot{\sigma}(t)  = {\bf A} \sigma(t) + {\bf P}I(t),  \\
+%		&\mathcal{V}_v(t)  = \int_{\Omega_L}\frac{\sigma(t)}{B}d\mathcal{V},  \\ 
+%		&{\bf M}(t) \times u(t)  = {\bf P} I(t), \\
+%		&{\bf \sigma}(0)  = [\sigma_1(0), \sigma_2(0), ..., \sigma_n(0)] \,\, ,at \,\, t = 0 
+%\end{align}
 
 \begin{align}
 	\label{eq:em}
@@ -29,15 +29,10 @@ On the other hand, the failed wire segments change the current distributions of 
 \end{align}
 
 
-
-In the above equations .~\eqref{eq:em}, ${\bf M}(t)$ is the time varying power grid conductance matrix, as the resistance changes due to the EM failure process. ${{\bf P}}$ is the input matrix and I(t) represents the current sources from the chip. ${{\bf C}}$ is the identity matrix and ${{\bf A}}$ is a coefficient matrix. $\sigma_{n}(0)$ denotes the initial stress at time step $t = 0$, for node $n$. For each new time step, the stress from previous simulation step is used as the initial condition.
+\textcolor{red}{These two paragraphs need merge} In the above equations .~\eqref{eq:em}, ${\bf M}(t)$ is the time varying power grid conductance matrix, as the resistance changes due to the EM failure process. ${{\bf P}}$ is the input matrix and I(t) represents the current sources from the chip. ${{\bf C}}$ is the identity matrix and ${{\bf A}}$ is a coefficient matrix. $\sigma_{n}(0)$ denotes the initial stress at time step $t = 0$, for node $n$. For each new time step, the stress from previous simulation step is used as the initial condition.
 
 The above equations in .~\eqref{eq:em} are coupled and must be solved together. Linear network IR drop solver passes time-dependent current densities and P/G layout information to the finite difference time domain (FDTD) EM solver. The FDTD EM solver provides the IR drop solver with new resistance information.  these two simulations are coupled together. Such iterative coupled analysis on long target lifetime can be extremely time consuming for very large power grid networks ~\cite{SunYu:TDMR'20,EMspiceSourceCode} 
 
-
-%$n$ represents the number of power grid interconnection nodes,  ${{\bf C}}$ is an $n \times n$ identity matrix and ${{\bf A}}$ is an $n \times n$ coefficient matrix. The void formation is built up in the incubation phase~\cite{TanAmrouch:2017int}, and the void volume and stress distribution of the remaining wire is correlated by the atom conservation equation in Eq.~\eqref{eq:conserv}, where $\mathcal{V}_v(t)$ is the void volume, $\Omega_L$ is the volume of the remaining interconnect wire and $\mathcal{V}$ is the volume of the wire. By using a finite difference time domain (FDTD) solver for hydrostatic stress~\cite{CookSun:TVLSI'18} in the nucleation phase, the partial differential Korhonen's equation is converted to the linear time-invariant (LTI) system as shown in Eq.~\eqref{eq:korhoene_fdft}.
-
-%Then the wire resistance starts to increase due to the void continuing to grow in the growth phase.  ${\bf M}(t)$ is the $n \times n$ power grid network conductance matrix. Due to the resistance change caused by the EM failure process, ${\bf M}(t)$ is time-varying. ${{\bf P}}$ is a $b \times p$ input matrix, where $p$ is the number of inputs. $u(t)$ represents the nodal voltages of the network. $I(t)$ is a column vector whose elements are the current sources from the function blocks of the chips. Note that $\sigma(0)$ denotes the initial stress at $t=0$. The resulting IR drops and EM failure hotspots are assessed by solving the above equations together. We adopt the open-source tool {\it EMspice} to conduct the EM-IR drop analysis as a simulation of the aging process and then further utilize the result from {\it EMspice} to train our DNN models. The above indicates that EM-induced IR drop analysis is a time-varying and iterative process that is concerned with voltage drop estimation from given current or power sources.
 
 
 
@@ -45,44 +40,27 @@ The above equations in .~\eqref{eq:em} are coupled and must be solved together. 
 
 %There are numerical methods to conduct power grid IR drop analysis, such as hierarchical methods, random walk methods, Krylov-subspace methods, multi-grid techniques, and vector-less verification methods.
 
-%\label{subsec:ml_em}
-PDN design is a complex iterative optimization task that strongly influences the performance, area, and cost of a chip. To reduce the design time, recent studies have paid attention to ML-based IR drop estimation, a time-consuming sub-task~\cite{LinFang:2018vts,Fang:2018dynireco,HoKahng:ICCAD'19,Xie:2020powernet,Sachin:ASPDAC'21}. 
-%Xie {\it et al.}
-The key ideas of these methods aims to substitue the standard full-chip IR drop analysis tool to data-driven feature extraction and learning-based methods. For instance, Lin {\it et al.}~\cite{LinFang:2018vts} tried to extract power and physical features from cells and layouts to conduct the full-chip dynamic IR drop analysis . Fang {\it et al.}~\cite{Fang:2018dynireco} proposed to training the models for the localized layout region to improve the scalability.  A convolutional neural network (CNN) based model that is able to incorporate design-dependent features during pre-processing is proposed by Xie {\it et al.}~\cite{Xie:2020powernet}, which is transferable across different designs.
-Ho {\it et al.}~\cite{HoKahng:ICCAD'19} proposed incremental IR drop prediction and mitigation by applying more electrical and physical features for the gradient boosting framework trainning. Chhabria {\it et al.}~\cite{Sachin:ASPDAC'21} proposed {\it IREDGe}, which is a CNN-based generative network method, to predict on-chip temperature and IR drop contours. Basically, it maps temperature and power grid analyses to image-to-image and sequence-to-sequence translation tasks.
+
+%PDN design is a complex iterative optimization task that strongly influences the performance, area, and cost of a chip. 
+%To reduce the design time 
+Recent studies pay attention to ML-based PDN IR drop estimation ~\cite{LinFang:2018vts,Fang:2018dynireco,HoKahng:ICCAD'19,Xie:2020powernet,Sachin:ASPDAC'21}. 
+The key ideas of these methods aims to substitute the standard full-chip IR drop analysis tool to data-driven feature extraction and training. Lin {\it et al.}~\cite{LinFang:2018vts} tried to extract power and physical features from cells and layouts to conduct the full-chip dynamic IR drop analysis . Fang {\it et al.}~\cite{Fang:2018dynireco} proposed to training the models for the localized layout region to improve the scalability.  A convolutional neural network (CNN) based model that is able to incorporate design-dependent features during pre-processing is proposed by Xie {\it et al.}~\cite{Xie:2020powernet}, which is transferable across different designs.
+Ho {\it et al.}~\cite{HoKahng:ICCAD'19} proposed incremental IR drop prediction and mitigation by applying more electrical and physical features for the gradient boosting framework training. Chhabria {\it et al.}~\cite{Sachin:ASPDAC'21} proposed {\it IREDGe}, which is a CNN-based generative network method to predict on-chip IR drop contours with image-to-image and sequence-to-sequence translation tasks.
 Recently Zhou {\it et al.}~\cite{ZhouJin:ICCAD'20} proposed an EM-induced IR drop analysis framework based on conditional GAN. The framework regards the time and selected electrical features as input images and outputs the voltage map. Furthermore, it has been demonstrated that the trained CGAN models can be used to compute the sensitivity of objective function with respect to the wire resistances for localized power grid fixing.  These machine learning methods indeed have achieved significant progress in IR drop estimation. But none of them takes EM aging effects into consideration.
 In this work, we further leverage {\it GridNet}-like DNN for full-chip power grid optimization subject to the EM-induced IR drop constraints.
 
-\subsection{Existing EM-aware programming-based grid optimization}
+
+\subsection{Existing EM-aware PDN optimization}
  \label{subsec:exist_pgfix}
  % There have been a number of works proposed recently on wire segment sizing of power grid networks in order to fix the EM failures and IR drop considering the multi-segment interconnect wires. Zhou {\it et al.}~\cite{ZhouSun:ASPDAC'18,ZhouSun:TVLSI'19} proposed a power grid network sizing method based on the multi-segment EM immortality check criteria. It automatically considers all the wire segments and their interactions in an interconnect tree. However, the EM immortality constrained optimization is still conservative as it requires all the interconnect trees to be immortal, i.e., void nucleations are not allowed. Chang {\it et al.}~\cite{ChangBaranwal:ASPDAC'18} proposed a learning-based EM violation waiver system, which investigates every EM violation and takes an expert decision to either ignore the violation (waive-off) or resolve it (must-fix) in the design. However, this system cannot take the violation fix action.
- The SLP-based method was proposed first in~\cite{Tan:DAC'99} based on Black's equation. Then this method was extended to consider multi-segment wires ~\cite{ZhouSun:ASPDAC'18}. But this method can be too conservative as it requires all the wires to be immortal after optimization. Although this method has been extended to consider a targeted lifetime by allowing some wires to fail and optimizing the rest of the wires~\cite{ZhouSun:TVLSI'19}.  Recently \cite{Sukharev:2019pg} proposed to directly optimize EM-induced IR drops on the time-varying power grid networks EM caused by EM-induced aging using SLP (called successive linear programming).  The EM-induced aging effects on IR drop are computed by solving Korhonen equations.  Since it models the power grid network as a nonlinear time-varying system, sensitivities of the IR drop with respect to the wires have to be computed via the matrix solving methods at each time step. The circuit matrix construction and solving process are severely time-consuming, especially when the number of violations and size of the power grid is large.
+ Besides the full-chip aging-aware IR-drop estimation , one also need to fix or alleviate the excessive IR-drop to ensure a robust PDN design. Many past research apply nonlinear or linear optimization methods~\cite{DuMa:DAC'89,Tan:DAC'99,Wang:TCAD'05,ZhouSun:TVLSI'19, Sukharev:2019pg} to properly size the PDN wires. The goal of these optimization strategies is to meet the IR drop requirement at the target lifetime \textcolor{red}{or extend the MTTF} with minimize metal routing area.
  
-Specifically, for the power grid network $G$, we can write its model in the format of the following equation:
-\begin{equation}
- 	\label{eq:gv=i}
- 	G(t,s)\cdot v(t,s)= j(t)
-      \end{equation}
-where $G(t,s)$ is the $ n \times n$ conductance matrix of the power grid and $n$ is the number of nodes in the power grid.  \textit{G(t,s)} is the $n\times n$ node conductance matrix, $t$ is time and $s$ is a vector of scaling factors to indicate how to scale the width of power grid wires.  \textit{v(t,s)} and $j(t)$  are $n\times 1$ vectors representing node voltage drop and node current vector for the power grid, respectively. 
+ The SLP-based method was proposed first in~\cite{Tan:DAC'99} based on Black's equation. Then this method was extended to consider multi-segment wires ~\cite{ZhouSun:ASPDAC'18}. But this method can be too conservative as it requires all the wires to be immortal after optimization. Although this method has been extended to consider a targeted lifetime by allowing some wires to fail and optimizing the rest of the wires~\cite{ZhouSun:TVLSI'19}.  Recently \cite{Sukharev:2019pg} proposed to directly optimize EM-induced IR drops on the time-varying power grid networks EM caused by EM-induced aging using SLP (called successive linear programming).  The EM-induced aging effects on IR drop are computed by solving Korhonen equations.  Since it models the power grid network as a nonlinear time-varying system, sensitivities of the IR drop with respect to the wires have to be computed via the matrix solving methods at each time step. The circuit matrix construction and solving process are severely time-consuming, especially when the number of violations and size of the power grid is large.
 
- From \eqref{eq:gv=i} one can compute the sensitivity as follows~\cite{Sukharev:2019pg}:
- \begin{equation}
-	\label{eq:dVs}
-	\dfrac{\partial v(t,s)}{\partial s_{k}} = -G^{-1}\cdot \dfrac{\partial G(t,s)}{\partial s_{k}}  \cdot G^{-1}\cdot j(t)
-      \end{equation}
- where $s_{k}$ is the sizing factor of the $k$th power grid interconnect tree width, $\dfrac{\partial v(t,s)}{\partial s_{k}}$ is the required sensitivity of node vector $v$ with respect to the $k$th power grid tree. But to compute the \eqref{eq:dVs} for each tree, one has to solve the following steps: first we obtain $x = G^{-1}(t,s) \cdot j(t)$ by solving 
- \begin{equation}
-   G(t,s) \cdot x = j(t)
-   \label{eq:solving1}
-\end{equation}
-Then we calculate $y = \dfrac{\partial G(t,s)}{\partial s_{k}} \cdot x$. After this we solve the following equation again
-\begin{equation}
-  G(t,s) \cdot \dfrac{\partial v(t,s)}{\partial s_{k}} = y
-\label{eq:solving2}
-\end{equation}
-to obtain $ \frac{\partial v(t,s)}{\partial s_{k}} $.  As we can see, we need to perform matrix solving twice in \eqref{eq:solving1} and \eqref{eq:solving2} for {\it each} power grid tree $k$. Even if we only need to do one LU factorization on $G$ matrices for each $s$ value, we still need to solve back-substitutions each time for \eqref{eq:solving1} and \eqref{eq:solving2} . These are very expensive computations especially when the number of violations nodes and trees are large ($k$ is larger).
-Notice that the circuit node conductance matrix $G(t,s)$ is a sparse matrix. The sparsity remains in all the derived matrices of $G(t,s)$, such as $\dfrac{\partial G(t,s)}{\partial s_{k}}$ for all $k$.
-Thereby the circuit matrix-based method not only suffers a large computation workload during the matrix solving procedure but also undertakes a large time consumption for the circuit matrix construction as $G(t,s)$ and its derived matrices increases quadratically over the power grid node size $n$. In this work, we try to mitigate these issues by using DDN based modeling, which is much more scalable with the size of power gird and the number of violation, as will show soon in the next section. 
+To solve the optimization problem, we need two main inputs: v(T=t) and dv/ds. There are some methods to compute dv/ds, such as adjoint network method. Vxx also proposed a matrix solving method,
+The main drawback is, the dv/ds has to be computed line
+ 
+
 
 
  % This method aims to re-size the individual wires to meet the target IR drop criteria. The approach applies successive linear programming method, which iteratively expand a non-linear problem to a linear space and then optimize it. Each iteration contains the following steps: first linearize the nodes voltage drop around the current \textcolor{blue}{grid topology(wrong term)}, then determine the gradient descent direction at the current solution point through partial differential computation, finally find the updated solution point by solving a linear programming problem. Clearly this numerical computation method takes a huge amount of workload, hence the speed and scalability are the main issues.

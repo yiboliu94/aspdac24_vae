@@ -2,8 +2,7 @@
 \label{sec:results}
 \subsection{Experiment setup}
 The experiment is set up on a Linux server with 2 Xeon E5-2698v2
-processors and Nvidia Titan X RTX GPU. The applied CGAN-based DNN
-is built with the {\it TensorFlow} package. The linear
+processors and Nvidia Titan X RTX GPU. The applied VAE-based model is built with the {\it PyTorch} package. The linear
 programming-based power grid fixing part is implemented in Python. The
 test cases are randomly generated following the IBM-format, based on
 the topology we extract from the real design. The detailed set up procedure
@@ -72,63 +71,7 @@ We implemented the excessive linear programming method in~\cite{Sukharev:2019pg}
       outperform the conventional SLP-based method. As the sizes of
       the power grid increase, we see more speedup.
       
-\begin{table}[h]
-	\begin{center} 
-		\caption{Comparison with different number of node voltage violations}
-		\label{table:res_scalability}
-		\center
-		\resizebox{0.48\textwidth}{!}{
-			\begin{tabular}{| c| c | c | c | c | c | c | }
-				\hline 
-				{} &{} &\multicolumn{2}{c|} {Existing SLP-based~\cite{Sukharev:2019pg}} &\multicolumn{2}{c|} {DNN-based SLP} &{} \\
-				\cline{3-6}
-				\multirow{-2}{*}{Circuit}   &\multirow{-2}{*}{\# Violations} &{ Time (s) }  &{Area  Increase} &{ Time (s)} &{Area Increase} &\multirow{-2}{*}{Speedup}\\ \hline 
-				\hline 
-				Design3-PG6-1   &3  &686    &0.42\%       &9.32   &0.47\%  &73.6 \\ \hline
-				Design3-PG6-2   &80  &1059    &2.01\%      &14.04    &2.13\%  &75.42\\ \hline
-				Design3-PG6-3  &373  &1278  &2.65\%  	  &11.91   &2.92\%   &54.06 \\ \hline
-				Design3-PG6-4   &1952 &1436   &4.49\%  	&23.64   &4.37\%   &60.74\\ \hline
-				Design3-PG6-5   &4067&1660   &4.63\%  	&47.07   &4.57\%  &35.26 \\ \hline
 
-			\end{tabular}
-			}
-	\end{center}
-	\vspace{-0.1in}
-\end{table}
-
-We further study how the two methods scale with different number of
-violations, which indicates how many node IR drop violations
-in the power grid networks. The results are shown in table
-\ref{table:res_scalability}.
-% Another benefit of applying DNN to accelerate the power grid
-% EM aging analysis is that it can scale much better for more violation nodes or trees in the design.  The four PG6 examples shown
-% in table \ref{table:res_scalability} share same power grid design but 
-% have different current strength. Hence the number of node voltage violation
-% varies.
-The Design3-PG6 example has 16384 interconnect nodes and 256
-interconnect trees. we use a heuristic way to select the trees to be
-resized, usually the union of aging-vulnerable trees and the
-interconnect trees on the violation nodes. The DNN-based IR drop
-modeling techniques scale well for full-chip IR drop and sensitivities
-analysis even with large number of violations. The CPU time changes
-from 9.32 seconds to 47.07 seconds for 3 node voltage violations to
-4067 node voltage violations. On the other hand, the existing SLP
-method changes from 686 seconds to 1660 seconds.  As we can see from
-the last column in this table, when the power grid has huge amount of
-node voltage violations, although the time increase of our method is
-significantly smaller than the conventional method, the speedup
-decreased a little bit. Because both methods consume longer to solve
-the linear programming step when the number of node voltage violations
-increase, but the conventional method takes a constant time to
-build the relative power grid matrices before the matrix computation
-in ~\eqref{eq:dVs}.
-% Benefit from this
-% character, the proposed DNN-based method is quite scalable with the
-% situation containing many violations. In comparison the conventional 
-% SLP-based power grid fixing method take longer time as the number of 
-% node voltage violations increase. We can see from the \ref{table:res_scalability}
-% that the time consumption of SLP-based method almost doubled but the DNN-method time
-% consumption keeps basically unchanged.
 
 
 

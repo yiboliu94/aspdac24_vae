@@ -30,20 +30,11 @@ However they are some drawbacks of GAN-based strategy, such as GANs are challeng
 Based on those observations, we propose a fast EM-aware full-chip power grid IR drop fixing method by leveraging the modeling power of VAE. Our key contributions are decomposed as follows:
 
 \begin{itemlist}
-	
+\item We propose a VAE-based IR-drop modeling framework which can fast predict the on chip power grid IR-drop considering EM effect, achieve over 40$\%$ reduction in RMSE over state-of-the-art GAN-based model.
 
-
-%We propose using a conditional generative adversarial network(CGAN)-based tool {\it GridNet}~\cite{ZhouJin:ICCAD'20} to quickly acquire the sensitivity matrix for the power grid fixing, avoiding a heavy-loaded numerical computation process and improving the running speed.
-
-%\item First we propose a VAE-based model to fast predict the EM-aware full-chip power grid IR drop. Our new model reduced approximately 40$\%$ RMSE in mV, Compared to the GAN-based model.
-\item We propose a VAE-based IR-drop modeling framework which can fast predict the on chip power grid IR-drop considering EM effect, achieve over 40$\%$ reduction in RMSE over state-of-the-art GAN-based model.   
-	
-%\item Second, instead of using the circuit matrix solving-based sensitivity computation method in~\cite{Sukharev:2019pg}, we quickly acquired the sensitivity information from the network auto-gradient,  which is similar to the CGAN in ~\cite{ZhouJin:ICCAD'20}, to compute the EM-induced IR drop at the given lifetime and the sensitivities of the IR drops with respect to the wire segment width.  Our VAE-based strategy significantly improves the running speed of the current SLP-based voltage failure fixing methods.
 \item We accelerated the SLP method for full-chip power grid IR drop failure fixing by fast acquiring the sensitivity matrix from the VAE model back propagation. 
  Experimental results on a number of synthesized power grid benchmarks from ARM Cortex-M0 processor designs show that the proposed method can provide up to 90X (at least one order of magnitude) speedup over the existing analytical matrix solving-based SLP method ~\cite{Sukharev:2019pg}.
- And it scales well  with a large number of violations and thereby improving the efficiency of the whole optimization process.
-    %Compared to the recently proposed GAN-accelerated conjugate gradient-based optimization method, the proposed method can lead to 2-8X speedup on the synthesized power grid networks.
-  
+ 
 \end{itemlist}
 
 The rest of the paper is organized as follows:
