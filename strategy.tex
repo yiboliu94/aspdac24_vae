@@ -33,10 +33,10 @@ The VAE model contain four convolutional layers and two fully-connected layers. 
 	\label{fig:VAE_architecture}
 \end{figure*}
 
-The Loss function for a VAE has two parts. The first is the reconstruction loss, which measures the difference between the decoded result $\hat{y} = P(\hat{y}|z)$ and label $y$, encourages the decoded output data to be similar to the label. As our data is continuous, we allocate the mean squared error (MSE) for the reconstruction loss evaluation.
+The Loss function for a VAE has two parts. The first is the reconstruction loss, which measures the difference between the decoded result $\hat{y} = P(\hat{y}|z)$ and label $y$, encourages the decoded output data to be similar to the label. As our data is continuous, we allocate the mean squared error (MSE) loss for the reconstruction loss evaluation \eqref{eq:vae_MSE_loss}, where N is the total number of output pixels.
 \begin{equation}
 	\label{eq:vae_MSE_loss}
-	\textit{MSE}
+	\textit{MSE} = \frac{1}{N} \sum_{1}^{N} ( y - \hat{y})^{2}
 \end{equation}
 The second part is the Kullback-Leibler (KL) divergence between the latent variable distribution $Q(z|x)$ output by the encoder and a chosen prior distribution, usually a standard multivariate gaussian distribution $\mathcal{N}(\textbf{0}, \textbf{I})$. The KL divergence measures how one probability distribution is different from a second, which acts as a regularization term to force the encoded latent distribution from the given training dataset to be close to a standard normal distribution, and encourage the network to use the latent space efficiently. 
 For each datapoint x, if we denote the mean of $Q(z|x)$ as $\mu$ and the standard deviation as $\sigma$, this loss can be written as:
@@ -87,26 +87,6 @@ Then we parse the electrical features and the topological information from the c
 	\end{center}
 	\vspace{-0.1in}
 \end{table}
-
-\begin{table}[!h]
-	\begin{center} 
-		\caption{Prediction results of VAE model and GAN model on different designs}
-		\label{table: Model_RMSE_Compare}
-		\center
-			\begin{tabular}{| c| c | c | c | }
-				\hline 
-				{} &{} &\multicolumn{2}{c|} {RMSE (mV)}  \\
-				\cline{3-4}
-				\multirow{-2}{*}{Circuit}   &\multirow{-2}{*}{\# nodes} &{ GAN}  &{ VAE}   \\ \hline 
-				\hline 
-				Design1  &1024      &5.697 	& 3.144 	 \\ \hline
-				Design2  &4096      &6.100	&  3.519	\\ \hline
-				Design3  &16384   &3.922	        &  3.462	\\ \hline			
-			\end{tabular}
-	\end{center}
-	\vspace{-0.1in}
-\end{table}
-
 
 
 
@@ -212,28 +192,9 @@ And the sensitivity
 \end{equation}
 
 
+To solve the above equation and obtain $ \frac{\partial v(t,s)}{\partial s_{k}}$, one has to first construct the sparse matrices G and $\dfrac{\partial G(t,s)}{\partial s_{k}}$ for all $k$, and then perform matrix solving. 
+Each column of the  \textit{Jacobian} matrix \eqref{eq:J_matrix} has to be calculated through the process of \eqref{eq:dVs} for the corresponding power grid tree. Hence building such a \textit{Jacobian} matrix in traditional method is computational expensive.
 
-
-To solve the above equation and obtain $ \frac{\partial v(t,s)}{\partial s_{k}}$, one has to first construct the G-related matrices , and then perform expensive computational matrix solving. 
-
-%first we obtain $x = G^{-1}(t,s) \cdot j(t)$ by solving 
- %\begin{equation}
-%   G(t,s) \cdot x = j(t)
-%   \label{eq:solving1}
-%\end{equation}
-%Then we calculate $y = \dfrac{\partial G(t,s)}{\partial s_{k}} \cdot x$. After this we solve the following equation again
-%\begin{equation}
-%	G(t,s) \cdot \dfrac{\partial v(t,s)}{\partial s_{k}} = y
-%	\label{eq:solving2}
-%\end{equation}
-
-%As we can see, we need to perform matrix solving twice in \eqref{eq:solving1} and \eqref{eq:solving2} for {\it each} power grid tree $k$. 
-Even if we only need to do one LU factorization on $G$ matrices for each $s$ value, we still need to solve back-substitutions each time for \eqref{eq:solving1} and \eqref{eq:solving2} . These are very expensive computations especially when the number of violations nodes and trees are large ($k$ is larger).
-Notice that the circuit node conductance matrix $G(t,s)$ is a sparse matrix. The sparsity remains in all the derived matrices of $G(t,s)$, such as $\dfrac{\partial G(t,s)}{\partial s_{k}}$ for all $k$.
-Thereby the circuit matrix-based method not only suffers a large computation workload during the matrix solving procedure but also undertakes a large time consumption for the circuit matrix construction as $G(t,s)$ and its derived matrices increases quadratically over the power grid node size $n$. In this work, we try to mitigate these issues by using DDN based modeling, which is much more scalable with the size of power gird and the number of violation, as will show soon in the next section. 
-
-
-Notice that each column of \eqref{eq:J_matrix} has to be calculated through the entire process described in \eqref{eq:dVs} for the corresponding power grid tree. In comparison our VAE-based method constructs the \textit{Jacobian} matrix by conducting the inference procedure only once.
 
 
 

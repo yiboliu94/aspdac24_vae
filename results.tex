@@ -26,8 +26,28 @@ We have three different topology designs. To train the model, each topology need
 
 
 %\subsection{The performance and CPU costs comparisons}
-\subsection{The performance comparison to the existing SLP-based method}
+\subsection{The result and performance}
 We implemented the excessive linear programming method in~\cite{Sukharev:2019pg} and our proposed method for comparison. 
+
+\begin{table}[!h]
+	\begin{center} 
+		\caption{Prediction results of VAE model and GAN model on different designs}
+		\label{table: Model_RMSE_Compare}
+		\center
+			\begin{tabular}{| c| c | c | c | }
+				\hline 
+				{} &{} &\multicolumn{2}{c|} {RMSE (mV)}  \\
+				\cline{3-4}
+				\multirow{-2}{*}{Circuit}   &\multirow{-2}{*}{\# nodes} &{ GAN}  &{ VAE}   \\ \hline 
+				\hline 
+				Design1  &1024      &5.697 	& 3.144 	 \\ \hline
+				Design2  &4096      &6.100	&  3.519	\\ \hline
+				Design3  &16384   &3.922	        &  3.462	\\ \hline			
+			\end{tabular}
+	\end{center}
+	\vspace{-0.1in}
+\end{table}
+
 
 \begin{table}[h]
 	\begin{center} %\footnotesize
@@ -38,15 +58,21 @@ We implemented the excessive linear programming method in~\cite{Sukharev:2019pg}
 			\begin{tabular}{| c | c | c | c | c | c | c | }
 				\hline 	
 				{} &{} &\multicolumn{2}{c|} {Existing SLP~\cite{Sukharev:2019pg}}  & \multicolumn{2}{c|} {DNN-based SLP} &{} \\ 
-				\cline{3-6} \multirow{-2}{*}{Circuit} & \multirow{-2}{*}{PG Size} & {Area Increase} & {Time(s)}   &{Area Increase} & {Time (s)} & \multirow{-2}{*}{Speed up}  \\ \hline 
+				\cline{3-6} \multirow{-2}{*}{Circuit} & \multirow{-2}{*}{PG Size} & {Area Increase} & {Time(s)}   &{Area Increase} & {Time (s)} & \multirow{-2}{*}{Speed up}  \\  [4pt]
 				\hline 
-				Design1-PG1  &1024     &0.50\%	&67.2      &0.51\%	&3.52    &19.09		\\	\hline
-				Design2-PG2  &4096     &0.91\%	&141       &0.88\%	&5.28    &26.70		\\	\hline
-				Design2-PG3  &4096     &0.72\%	&120       &0.81\%	&6.24    &19.23 	\\	\hline
-				Design3-PG4  &16384   &1.62\% 	&863       &1.77\%	&9.22    &93.60		\\	\hline
-                			Design3-PG5  &16384   &4.91\% 	&967       &5.38\%	&13.78  &70.17		\\	\hline
+				\hline 
+				Design1-PG1  &1024     &0.50\%	&67.2      &0.51\%	&3.52    &19.09		\\ [5pt]
+				\hline
+				Design2-PG2  &4096     &0.91\%	&141       &0.88\%	&5.28    &26.70		\\	[5pt]
+				\hline
+				Design2-PG3  &4096     &0.72\%	&120       &0.81\%	&6.24    &19.23 	\\	[5pt]
+				\hline
+				Design3-PG4  &16384   &1.62\% 	&863       &1.77\%	&9.22    &93.60		\\	[5pt]
+				\hline
+				Design3-PG5  &16384   &4.91\% 	&967       &5.38\%	&13.78  &70.17		\\	[5pt]
+				\hline
 			\end{tabular}
-			}
+		}
 	\end{center}
 	\vspace{-0.1in}
 \end{table}
