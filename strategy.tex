@@ -36,7 +36,7 @@ The VAE model contain four convolutional layers and two fully-connected layers. 
 The Loss function for a VAE has two parts. The first is the reconstruction loss, which measures the difference between the decoded result $\hat{y} = P(\hat{y}|z)$ and label $y$, encourages the decoded output data to be similar to the label. As our data is continuous, we allocate the mean squared error (MSE) loss for the reconstruction loss evaluation \eqref{eq:vae_MSE_loss}, where N is the total number of output pixels.
 \begin{equation}
 	\label{eq:vae_MSE_loss}
-	\textit{MSE} = \frac{1}{N} \sum_{1}^{N} ( y - \hat{y})^{2}
+	\textit{MSE}(y, \hat{y}) = \frac{1}{N} \sum_{1}^{N} ( y - \hat{y})^{2}
 \end{equation}
 The second part is the Kullback-Leibler (KL) divergence between the latent variable distribution $Q(z|x)$ output by the encoder and a chosen prior distribution, usually a standard multivariate gaussian distribution $\mathcal{N}(\textbf{0}, \textbf{I})$. The KL divergence measures how one probability distribution is different from a second, which acts as a regularization term to force the encoded latent distribution from the given training dataset to be close to a standard normal distribution, and encourage the network to use the latent space efficiently. 
 For each datapoint x, if we denote the mean of $Q(z|x)$ as $\mu$ and the standard deviation as $\sigma$, this loss can be written as:
@@ -51,7 +51,7 @@ Hence the training target is to minimize the total loss:
 \begin{equation}
 	\label{eq:vae_total_loss}
 	%\min_{\theta}  \{  \textit{MSE} (y , \hat{y} )   ~ + ~  D_{KL}( \mathcal{N}(\mu_{x}, \sigma_{x}^{2}) ~ || ~ \mathcal{N}(\textbf{0}, \textbf{I} ) )  \}
-	\min  \{  \textit{MSE} (y , \hat{y} )   ~ + ~  D_{KL}( \mathcal{N}(\mu_{x}, \sigma_{x}^{2}) ~ || ~ \mathcal{N}(\textbf{0}, \textbf{I} ) )  \}
+	\min  \{ \textit{MSE} (y, \hat{y})  ~ + ~  D_{KL}( \mathcal{N}(\mu_{x}, \sigma_{x}^{2}) ~ || ~ \mathcal{N}(\textbf{0}, \textbf{I} ) )  \}
 \end{equation}
 
 During training, the VAE learns to map the input data to a lower-dimensional latent space in a way that it can generate similar data from points in this space. Because of the probabilistic nature of the encoding, and the use of the KL divergence in the loss function, the VAE is encouraged to create a smooth and continuous latent space, where similar points decode to similar data.
