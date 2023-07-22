@@ -29,7 +29,7 @@ The VAE model contain four convolutional layers and two fully-connected layers. 
 \begin{figure*}[h!]
 	\centering
 	\includegraphics[width=1.8\columnwidth]{./figs/vae.eps}
-	\caption{VAE-based EM-aware IR drop prediction model} 
+	\caption{VAE-based model for EM-aware IR drop prediction} 
 	\label{fig:VAE_architecture}
 \end{figure*}
 
@@ -96,15 +96,20 @@ Then we parse the electrical features and the topological information from the c
 
 The structure of the combined VAE-based model and the proposed workflow of the fixing strategy is shown in Fig.~\ref{fig:flow}. 
 
-\begin{figure*}[h!]
+%\begin{figure*}[h!]
+%	\centering
+%	\captionsetup{justification=centering, margin=3cm}
+%	\includegraphics[width=1.2\columnwidth]{./figs/flow.eps}
+%	\caption{The proposed framework of VAE-accelerated power gird fixing method.}
+%	\label{fig:flow}
+%\end{figure*}
+
+\begin{figure}[h!]
 	\centering
-	\captionsetup{justification=centering, margin=3cm}
-	\includegraphics[width=1.8\columnwidth]{./figs/flow.eps}
+	\includegraphics[width=0.98\columnwidth]{./figs/flow.eps}
 	\caption{The proposed framework of VAE-accelerated power gird fixing method.}
 	\label{fig:flow}
-\end{figure*}
-
-
+\end{figure}
 
 \subsubsection{problem formulation}
 \label{subsubsec:formulation}
