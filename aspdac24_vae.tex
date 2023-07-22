@@ -74,7 +74,7 @@
 
 
 \begin{document}
-\title{ EM-Aware Power Grid IR Drop Fixing Accelerated by Variational AutoEncoder}
+\title{ Fast Power Grid EM-Aware IR Drop Prediction and Fixing Accelerated by Variational AutoEncoder}
 
 %\author{\indent Yibo Liu~\IEEEmembership{Student Member,~IEEE}, 
 %Sheldon X.-D. Tan~\IEEEmembership{Senior Member,~IEEE} 
@@ -93,8 +93,6 @@ We formulate the power grid EM-IR drop fixing as a optimization problem and solv
 The optimization is accelerated by the fast acquisition of aging-aware IR drop as the VAE model prediction output, and the sensitivity of aging-induced voltage to the initial PGN tree conductance from the model inference auto gradient. 
 We show that the proposed VAE-accelerated EM-aware fixing method can lead up to 90X (at least one order of magnitude) speedup over the conventional SLP-based method on synthesized power grid benchmarks from ARM Cortex-M0 processor design.
 
-
-
 \end{abstract}
  
 \input intro.tex
@@ -109,10 +107,8 @@ We show that the proposed VAE-accelerated EM-aware fixing method can lead up to 
 \label{sec:conclusion}
 In this paper, we proposed a VAE accelerated power grid
 fixing method based on a recently proposed linear programming based
-optimization framework.  But instead of using the numerical matrix
-solving method for obtaining the sensitivity information, which is
-computationally slow and does not scale well for more violations, we
-proposed to use the VAE-based model to accelerate sensitivity
+optimization framework.  
+we proposed to use the VAE-based model to accelerate sensitivity
 computation.  Numerical results on a number of synthesized power grid
 benchmarks from ARM Cortex-M0 processor designs show that the proposed
 method can lead to at least one order of magnitude speedup over the
