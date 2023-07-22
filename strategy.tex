@@ -28,8 +28,8 @@ The VAE-based EM-aware IR-drop prediction model structure is shown in Fig.\ref{f
 The VAE model contain four convolutional layers and two fully-connected layers. The input is first padded to the standard size of 64 x 64 for the power grid smaller than this size. If the power grid exceeds the size of 64 x 64 but smaller than 128 x 128, then we add one more convolutional layer in both the generator and the discriminator network. For the further larger or smaller sized power grid, we follow the same routine to add or remove the convolutional layers to fit the input size.
 \begin{figure*}[h!]
 	\centering
-	\includegraphics[width=1.8\columnwidth]{./figs/VAE_temp.eps}
-	\caption{The VAE model structure in our method} 
+	\includegraphics[width=1.8\columnwidth]{./figs/vae.eps}
+	\caption{VAE-based EM-aware IR drop prediction model} 
 	\label{fig:VAE_architecture}
 \end{figure*}
 
