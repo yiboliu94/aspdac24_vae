@@ -85,20 +85,13 @@
 \maketitle
   
 \begin{abstract}
-  Electromigration (EM) remains the top failure mechanism for
-  copper-interconnected deep sub-micro technologies. This paper
-  presents a full-chip EM-aware IR drop fixing method for on-chip power
-  grid networks Accelerated by Variational AutoEncoder. We proposed a
-  Variational AutoEncoder (VAE) accelerated power grid IR drop fixing framework, in which the
-  sensitivity computation for the sequence of linear programming (SLP)
-  is accelerated by VAE-based machine learning method instead of traditional
-  numerical methods.
-
-
-  
-Compared to the recently proposed generative adversarial network (GAN) based method, our VAE model has a higher accuracy in terms of 40$\%$ RMSE reduction in mV.
-We also show that the proposed method can lead up to 90X (at least one order of magnitude) speedup over the conventional SLP-based method on synthesized power grid benchmarks from ARM Cortex-M0 processor design.
-   %The proposed method can still lead to 2-8X speedup conjugate gradient-based optimization method.
+Electromigration (EM) remains the top failure mechanism for copper-interconnected deep sub-micro technologies. 
+This paper presents a Variational AutoEncoder (VAE)-based EM-aware IR drop prediction model for the full-chip power grid network.
+Compared to the recently proposed generative adversarial network (GAN)-based method, our VAE model has a higher accuracy in terms of 40$\%$ RMSE reduction in mV.
+We further extend our VAE-based fast EM-aware IR drop prediction model to a fast full-chip power grid IR-drop fixing framework.
+We formulate the power grid EM-IR drop fixing as a optimization problem and solve it with sequence of linear programming (SLP) method, 
+Ehe optimization is accelerated by the fast acquired aging-aware IR drop as the VAE model prediction output, and the sensitivity of aging-induced voltage to the initial PGN tree conductance from the model auto gradient. 
+We show that the proposed VAE-accelerated EM-aware fixing method can lead up to 90X (at least one order of magnitude) speedup over the conventional SLP-based method on synthesized power grid benchmarks from ARM Cortex-M0 processor design.
 
 
 
