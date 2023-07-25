@@ -56,7 +56,10 @@ The solving process is severely time-consuming, especially when the power grid i
 
 
 
-
-
  % This method aims to re-size the individual wires to meet the target IR drop criteria. The approach applies successive linear programming method, which iteratively expand a non-linear problem to a linear space and then optimize it. Each iteration contains the following steps: first linearize the nodes voltage drop around the current \textcolor{blue}{grid topology(wrong term)}, then determine the gradient descent direction at the current solution point through partial differential computation, finally find the updated solution point by solving a linear programming problem. Clearly this numerical computation method takes a huge amount of workload, hence the speed and scalability are the main issues.
  % We hereby propose our DNN-based machine learning method to accelerate this optimization approach. We replace the
+
+\subsection{Variational Autoencoder}
+In this paper, we adope VAE~\cite{xxx} as the machine learnig models for the EM-aware IR drop estimations. VAE follows the similar structure of autoencoder, which consists of encoder and decoders neural networks. The encoder compress the data into the low dimentional latent variables and decoders generate  new data from the latent variables. 
+
+Specifically, 
