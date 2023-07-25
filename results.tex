@@ -17,7 +17,7 @@ wire resistance values, node location, voltage and current source, etc. The outp
 file parser is consistent with the IBM power grid benchmarks \cite{Nassif:ASPDAC'08}. We generate 
 large amount of IBM-format power grid networks to ensure different workloads can be tested and verified.\\
 
-We have three different topology designs. To train the model, each topology needs its own dataset containing more than 10000 pairs of samples  (workloads and aging time, EM-induced IR drop). The maximum allowable IR drop is set to $10\% \ V_{dd}$ and the target EM lifetime $T$ is 10 years. 
+We have three different topology designs. To train the model, each topology needs its own dataset containing more than 10000 pairs of samples  (workloads and aging time, EM-induced IR drop). The maximum allowable IR drop is set to $5\% \ V_{dd}$ and the target EM lifetime $T$ is 10 years. 
 
 
 
@@ -57,19 +57,19 @@ We implemented the excessive linear programming method in~\cite{Sukharev:2019pg}
 		\resizebox{0.48\textwidth}{!}{
 			\begin{tabular}{| c | c | c | c | c | c | c | }
 				\hline 	
-				{} &{} &\multicolumn{2}{c|} {Existing SLP~\cite{Sukharev:2019pg}}  & \multicolumn{2}{c|} {DNN-based SLP} &{} \\ 
+				{} &{} &\multicolumn{2}{c|} {Existing SLP~\cite{Sukharev:2019pg}}  & \multicolumn{2}{c|} {VAE-accelerated SLP} &{} \\ 
 				\cline{3-6} \multirow{-2}{*}{Circuit} & \multirow{-2}{*}{PG Size} & {Area Increase} & {Time(s)}   &{Area Increase} & {Time (s)} & \multirow{-2}{*}{Speed up}  \\  [4pt]
 				\hline 
 				\hline 
-				Design1-PG1  &1024     &0.50\%	&67.2      &0.51\%	&3.52    &19.09		\\ [5pt]
+				Design1-PG1  &1024     &1.61\%	&41.8      & 0.98\%	&2.5    &16.79		\\ [5pt]
 				\hline
-				Design2-PG2  &4096     &0.91\%	&141       &0.88\%	&5.28    &26.70		\\	[5pt]
+				Design2-PG2  &4096     & 1.55\%	& 165.8      & 1.79\%	        & 7.6   &21.82s		\\	[5pt]
 				\hline
-				Design2-PG3  &4096     &0.72\%	&120       &0.81\%	&6.24    &19.23 	\\	[5pt]
+				Design2-PG3  &4096     &\%	&      &\%	&   &	\\	[5pt]
 				\hline
-				Design3-PG4  &16384   &1.62\% 	&863       &1.77\%	&9.22    &93.60		\\	[5pt]
+				Design3-PG4  &16384   &\% 	&       &\%	&  &		\\	[5pt]
 				\hline
-				Design3-PG5  &16384   &4.91\% 	&967       &5.38\%	&13.78  &70.17		\\	[5pt]
+				Design3-PG5  &16384   &\% 	&      &\%	&  & \\	[5pt]
 				\hline
 			\end{tabular}
 		}
