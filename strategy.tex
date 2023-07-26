@@ -32,30 +32,27 @@ The conductance and current are normalized, then the input $\textit{\textbf{x}}$
 In this example, the encoder contains of four convolutional layers followed by two fully-connected layers. The detailed dimensions of the layer have been indicated in Fig.\ref{fig:VAE_architecture}. 
 Next we use the reparameterization trick as described in \ref{subsec:vae_intro}  to sample and obtain the latent variable $\textbf{z}$ and send it to the decoder.
 The decoder is designed to mirror the architecture of the encoder in a symmetric manner, except the output layer has only one channel. The output is $\mathbb{R} ^{64\times 64\times 1}$ EM aware IR drop at target aging year.
+If the power grid exceeds the size of 64 x 64 but smaller than 128 x 128, then we pad the input into the standard size of 128 x 128 and add one more convolutional layer in both the encoder and the decoder network. 
+For the smaller sized power grid, we follow the same routine remove the convolutional layer to fit the input size.
 
 
-If The input is first padded to the standard size of 64 x 64 for the power grid smaller than this size. If the power grid exceeds the size of 64 x 64 but smaller than 128 x 128, then we add one more convolutional layer in both the generator and the discriminator network. 
-For the further larger or smaller sized power grid, we follow the same routine to add or remove the convolutional layers to fit the input size.
+%During training, the VAE learns to map the input data to a lower-dimensional latent space in a way that it can generate similar data from points in this space. Because of the probabilistic nature of the encoding, and the use of the KL divergence in the loss function, the VAE is encouraged to create a smooth and continuous latent space, where similar points decode to similar data.
 
+The data preprocessing before the model training is as follows:
+First the circuit layouts are automatically created by Synopsys IC compiler from a synthesized gate-level netlist and a standard cell library. 
 
-During training, the VAE learns to map the input data to a lower-dimensional latent space in a way that it can generate similar data from points in this space. Because of the probabilistic nature of the encoding, and the use of the KL divergence in the loss function, the VAE is encouraged to create a smooth and continuous latent space, where similar points decode to similar data.
-
-
-
-
-
-
-As for our VAE-based model training data, first we extract the electrical information from the result of the  $\it{EMspice}$. The input features of VAE model should include the node voltage $u(t)$ and $M(t)$,  the conductance matrix of the power grid network.
+Then IC Compiler output power grid information is sent to the power grid file parser, and reorganize the information includes structure, wire layer, wire length, wire resistance values, node location, voltage and current source, etc.
+Next the $\it{EMspice}$ provides the EM-aware electrical information from the result above.
+Eventually we parse these EM-aware electrical features and the topological information for the circuit layout, and send it to our VAE-based model for the training and testing. 
 %in the format of wire segment resistance vectors, which are mentioned in Eq.~\eqref{eq:mna}. 
 
 
-The data preprocessing before the model training is as follows. Synopsys IC compiler can automatically create the circuit layout from a synthesized gate-level netlist and a standard cell library. 
-Then we parse the electrical features and the topological information from the circuit layout.
+
 
 \begin{table}[!htbp]
 	\begin{center}
-		\caption{Power Grid Design Detail}
-		\label{table:pre_results}
+		\caption{Power Grid Designs Detail}
+		\label{table:pg_detail}
 		%\vspace{-0.1in}
 		\center
 		\resizebox{0.48\textwidth}{!}{
@@ -65,7 +62,7 @@ Then we parse the electrical features and the topological information from the c
 			\hline 
 			Design1 &1024 &64   &2 &1.05  \\ \hline
 			Design2 &4096 &128  &4 &1.05 \\ \hline
-			Design3 &16384 &256 &4 &1.05  \\ \hline
+			Design3 &16384 &256 &9 &1.05  \\ \hline
 		\end{tabular}
 		}
 	\end{center}
@@ -75,7 +72,7 @@ Then we parse the electrical features and the topological information from the c
 
 
 
-\subsection{power grid EM-aware IR drop fixing framework }
+\subsection{fast power grid EM-aware IR drop fixing framework }
 \label{subsec:formulation}
 
 The structure of the combined VAE-based model and the proposed workflow of the fixing strategy is shown in Fig.~\ref{fig:flow}. 

@@ -1,31 +1,22 @@
 \section{Experimental results and discussions}
 \label{sec:results}
 \subsection{Experiment setup}
-The experiment is set up on a Linux server with 2 Xeon E5-2698v2
-processors and Nvidia Titan X RTX GPU. The applied VAE-based model is built with the {\it PyTorch} package. The linear
-programming-based power grid fixing part is implemented in Python. The
-test cases are randomly generated following the IBM-format, based on
-the topology we extract from the real design. The detailed set up procedure
-starts from synthesizing the power grid of the Cortex-M0 DesignStart 
-processor, which implements ARMv6-M 32-bit architecture and is routed and placed
-using IC Compiler with 32/28nm Generic Library from Synopsys. The Cortex power grid
-consists of two layers and one thousand interconnect trees.
+The experiment is set up on a Linux server with 2 Xeon E5-2698v2 processors and Nvidia Titan X RTX GPU. 
+The applied VAE-based model is built with the PyTorch package. 
+The linear programming-based power grid fixing part is implemented in Python.
+The test cases are randomly generated following the IBM-format, based on the topology we extract from the real design and the constraints that the user defines.
+It consists of VDD power nets, VSS ground nets, and two external supplies.
+The output from power grid file parser is consistent with the IBM power grid benchmarks \cite{Nassif:ASPDAC'08}.
+We have three different topology designs and generate large amount of IBM-format power grid networks to ensure different workloads can be tested and verified. 
 
-The IC Compiler output power grid information is sent to the power grid file parser.
-The file parser reorganize the information includes structure, wire layer, wire length, 
-wire resistance values, node location, voltage and current source, etc. The output from power grid
-file parser is consistent with the IBM power grid benchmarks \cite{Nassif:ASPDAC'08}. We generate 
-large amount of IBM-format power grid networks to ensure different workloads can be tested and verified.\\
-
-We have three different topology designs. To train the model, each topology needs its own dataset containing more than 10000 pairs of samples  (workloads and aging time, EM-induced IR drop). The maximum allowable IR drop is set to $5\% \ V_{dd}$ and the target EM lifetime $T$ is 10 years. 
+Design 1 comes from Cortex-M0 DesignStart processor, which implements ARMv6-M 32-bit architecture and is routed and placed using IC Compiler with 32/28nm Generic Library from Synopsys. 
+The Cortex power grid consists of two layers and one thousand interconnect trees, and shown in Fig.~\ref{fig:icc2pg},  and Fig.~\ref{fig:genpg} shows the voltage drop from the same power grid and the unit is mV.
+Design 2 and Design 3 follow the similar pattern and the detailed information is in Table.~\ref{table:pg_detail}.
+To train the model, each topology needs its own dataset containing 10000 pairs of samples  (workloads and aging time, EM-induced IR drop). The maximum allowable IR drop is set to $5\% \ V_{dd}$ and the target lifetime $T$ is set to 10 years. 
 
 
 
 
-
-
-
-%\subsection{The performance and CPU costs comparisons}
 \subsection{The result and performance}
 We implemented the excessive linear programming method in~\cite{Sukharev:2019pg} and our proposed method for comparison. 
 
@@ -65,37 +56,22 @@ We implemented the excessive linear programming method in~\cite{Sukharev:2019pg}
 				\hline
 				Design2-PG2  &4096     & 1.55\%	& 165.8      & 1.79\%	        & 7.6   &21.82	\\	[5pt]
 				\hline
-				Design2-PG3  &4096     & \%	&     & \%	&  &	\\	[5pt]
+				Design2-PG3  &4096     & 0.70\%	&149     & 0.86\%	&7.34  &20.30	\\	[5pt]
 				\hline
 				Design3-PG4  &16384   &1.19 \% 	& 1034      & 1.53 \%	&12.3  &84.06		\\[5pt]
 				\hline
-				Design3-PG5  &16384   &  \% 	&     &\%	&   &     \\	[5pt]
+				Design3-PG5  &16384   &2.85  \% 	& 922    &2.14\%	& 13.7  & 67.2    \\	[5pt]
 				\hline
 			\end{tabular}
 		}
 	\end{center}
 	\vspace{-0.1in}
 \end{table}
-      
-      The table \ref{table:results} shows the comparison of our
-      proposed method against the existing SLP-based
-      method~\cite{Sukharev:2019pg} and DNN-based conjugate gradient
-      method~\cite{HanLiu:TCAD'22-23} for the power grid benchmarks in
-      Table~\ref{table:pre_results}. The last two columns indicate
+      The table \ref{table: Model_RMSE_Compare}  compare the prediction accuracy over then GAN-based model in Root Mean Square Error (RMSE), results shows we can reduce up to 40\% RMSE. 
+      The table \ref{table:results} shows the comparison of our VAE-accelerated power grid IR drop fixing strategy versus the existing SLP-based method~\cite{Sukharev:2019pg} . The last column indicate
       the proposed method has the speedup over ~\cite{Sukharev:2019pg}
-      and speedup over ~\cite{HanLiu:TCAD'22-23} respectively.
       As we can see that both SLP-based
-      methods can lead to similar performance in terms of area
-      increases from the optimization process. In some cases the
-      conjugate gradient method leads to a smaller area increase,
-      that's because we set the conjugate gradient method to only
-      widen the interconnect branch, not the entire interconnect tree
-      which the branch belong to. In irregular power grid, an
-      interconnect tree usually consists of very few branches, and the
-      area increase difference is expected to be smaller than our mesh grid type design.
-      On the other hand, we see that our DNN-accelerated SLP method indeed
-      outperform the conventional SLP-based method. As the sizes of
-      the power grid increase, we see more speedup.
+      methods can lead to similar performance in terms of area,  and can achieve more than 80X speedup.  On the other hand, we see that our VAE-accelerated SLP method shows more speedup advantages as the sizes of the power grid increase.
       
 
 
