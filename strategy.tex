@@ -2,11 +2,9 @@
 \label{sec:strategy}
 
 
-%In this section, we present the proposed VAE-accelerated EM-aware IR-drop fixing method. 
-First we introduce our VAE-based full-chip EM-aware IR-drop prediction model, the data preparation, and training.
-Then we introduce how to utilize the auto-gradient from VAE model to accelerate the convention SLP power grid fixing method ~\cite{Sukharev:2019pg}.
-%We follow the notation used in~\cite{Sukharev:2019pg} to introduce the optimization frame. 
-%Then we introduce our new sensitivity computation method using by VAE model.
+%First we introduce our VAE-based full-chip EM-aware IR-drop prediction model, the data preparation, and training.
+%Then we introduce how to utilize the auto-gradient from VAE model to accelerate the convention SLP power grid fixing method ~\cite{Sukharev:2019pg}.
+
 
 
 \subsection{VAE-based EM-aware IR-drop prediction model}
@@ -19,7 +17,7 @@ Then we introduce how to utilize the auto-gradient from VAE model to accelerate 
 
 
 
-We use VAE as the backbone for our EM-aware IR-drop prediction model, the structure is shown in Fig.\ref{fig:VAE_architecture}, we use a power grid with 64 rows and 64 columns as an example.
+We use VAE as the backbone for our EM-aware IR-drop prediction model. The structure is shown in Fig.\ref{fig:VAE_architecture}, and we use a power grid with 64 rows and 64 columns as an example.
 
 \begin{figure*}[h!]
 	\centering
@@ -29,10 +27,14 @@ We use VAE as the backbone for our EM-aware IR-drop prediction model, the struct
 \end{figure*}
 
 
-The model input consists of four channels. They are the power grid branch conductance splitted into vertical conductance $\mathbb{R} ^{64\times 64\times 1}$ and horizontal conductance $\mathbb{R} ^{64\times 64\times 1}$, the current source $\mathbb{R} ^{64\times 64\times 1}$ drawn to other circuit layers , and a target life time \textit{\textbf{t}} expanded into $\mathbb{R} ^{64\times 64\times 1}$ by channel-wise duplication as the conditional information. Hence the total input will be 64x64x4.
+The model input consists of four channels. They are the power grid branch conductance splitted into vertical conductance $\mathbb{R} ^{64\times 64\times 1}$ and horizontal conductance $\mathbb{R} ^{64\times 64\times 1}$, the current source $\mathbb{R} ^{64\times 64\times 1}$ drawn to other circuit layers, and a target life time $\textit{\textbf{t}} $expanded into $\mathbb{R} ^{64\times 64\times 1}$ by channel-wise duplication as the conditional information. Hence the total input will be 64x64x4. 
+The conductance and current are normalized, and then the input $\textit{\textbf{x}}$ is sent into the encoder and encoded as $ \mu_{x} $  and $ \sigma_{x}$. 
+In this example, the encoder contains of four convolutional layers followed by two fully-connected layers. The detailed dimensions of the layer have been indicated. 
+Then we use the reparameterization trick as described in \ref{subsec:vae_intro}  to sample and obtain the latent variable $\textbf{z}$ and send it to the decoder.
+The decoder is designed to mirror the architecture of the encoder in a symmetric manner, except the output layer has only one channel. The output is $\mathbb{R} ^{64\times 64\times 1}$ EM aware IR drop at target aging year.
 
-The input go through the VAE model from the encoder part. In this example, the encoder contains four convolutional layers and two fully-connected layers. 
-The input is first padded to the standard size of 64 x 64 for the power grid smaller than this size. If the power grid exceeds the size of 64 x 64 but smaller than 128 x 128, then we add one more convolutional layer in both the generator and the discriminator network. 
+
+If The input is first padded to the standard size of 64 x 64 for the power grid smaller than this size. If the power grid exceeds the size of 64 x 64 but smaller than 128 x 128, then we add one more convolutional layer in both the generator and the discriminator network. 
 For the further larger or smaller sized power grid, we follow the same routine to add or remove the convolutional layers to fit the input size.
 
 
@@ -179,7 +181,7 @@ And the sensitivity
 \end{equation}
 
 
-To solve the above equation and obtain $ \frac{\partial v(t,s)}{\partial s_{k}}$, one has to first construct the sparse matrices G and $\dfrac{\partial G(t,s)}{\partial s_{k}}$ for all $k$, and then perform matrix solving. 
+To solve the above equation and obtain $ \frac{\partial v(t,s)}{\partial s_{k}}$, one has to first construct the sparse matrices G and $\frac{\partial G(t,s)}{\partial s_{k}}$ for all $k$, and then perform matrix solving. 
 Each column of the  \textit{Jacobian} matrix \eqref{eq:J_matrix} has to be calculated through the process of \eqref{eq:dVs} for the corresponding power grid tree. Hence building such a \textit{Jacobian} matrix in traditional method is computational expensive.
 
 

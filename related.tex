@@ -59,6 +59,7 @@ The solving process is severely time-consuming, especially when the power grid i
  % We hereby propose our DNN-based machine learning method to accelerate this optimization approach. We replace the
 
 \subsection{Variational Autoencoder}
+\label{subsec:vae_intro}
 In this paper, we adopt VAE~\cite{Diederik:arxiv'22} as the machine learning models for the EM-aware IR drop estimations. 
 VAE follows the similar structure of autoencoder(AE).
 
@@ -83,7 +84,7 @@ The GAN model adopts the standard AE as a \textit{generator} to generate the res
 Variational autoencoder, as shown in  Fig.\ref{fig:vae}, is a type of unique generative model derived from the standard autoencoder, which are used to generate new data that is similar to the input data they're trained on. 
 Compared to traditional autoencoder structure, VAE does not directly encode the input to a determined latent variable, instead its encoded to a distribution over the latent space $Q(Z|X)$, and then sampling from this distribution to generate a latent variable for the decoder. This step is crucial to the VAE's some crucial characteristics over AE and AE-based GAN model, such as Interpretability of Latent Space, and Training Stability.
 Interpretability of Latent Space means that the latent space is smooth and interpretable, enabling nice properties like the ability to interpolate between different points in the latent space and generate new samples that exhibit a smooth transition between the characteristics of the original points. On the other hand, AE does not explicitly enforce such a structure, making the latent space less interpretable and interpolations might not always produce meaningful outputs. 
-Usually the VAE latent variable $z$ is generated using a reparameterization approach to ensure the model gradient descent back propagation. We denote the mean of $Q(Z|X)$ as $\mu$ and the standard deviation as $\sigma$, and sample $\epsilon \sim \mathcal{N}(\textbf{0}, \textbf{I} ) $, then compute z as equation.\eqref{eq:z_compute}:
+Usually the VAE latent variable $z$ is generated using a reparameterization approach to ensure the model back propagation with gradient descent . We denote the mean of $Q(Z|X)$ as $\mu$ and the standard deviation as $\sigma$, and sample $\epsilon \sim \mathcal{N}(\textbf{0}, \textbf{I} ) $, then compute z as equation.\eqref{eq:z_compute}:
 
 \begin{equation}
 	\label{eq:z_compute}
@@ -96,8 +97,8 @@ The Loss function for a VAE contains two parts. The first part is the \textit{re
 	\label{eq:vae_MSE_loss}
 	\textit{MSE}(y, \hat{y}) = \frac{1}{N} \sum_{1}^{N} ( y - \hat{y})^{2}
 \end{equation}
-The second part is the Kullback-Leibler (KL) divergence between the latent variable distribution $Q(z|x)$ output by the encoder and a chosen prior distribution, usually a standard multivariate gaussian distribution $\mathcal{N}(\textbf{0}, \textbf{I})$. The KL divergence measures how one probability distribution is different from a second, which acts as a regularization term to force the encoded latent distribution from the given training dataset to be close to a standard normal distribution, and encourage the network to use the latent space efficiently. 
-The KL divergence can be written as:
+The second part is the \textit{Kullback-Leibler (KL) divergence} between the latent variable distribution $Q(z|x)$ output by the encoder and a chosen prior distribution, usually a standard multivariate gaussian distribution $\mathcal{N}(\textbf{0}, \textbf{I})$. The \textit{KL divergence} measures how one probability distribution is different from a second, which acts as a regularization term to force the encoded latent distribution from the given training dataset to be close to a standard normal distribution, and encourage the network to use the latent space efficiently. 
+The \textit{KL divergence} in VAE can be written as:
 %$\mathcal{N}(\mu_{x}, \sigma_{x}^{2})$ 
 
 \begin{equation}
