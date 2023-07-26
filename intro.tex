@@ -28,7 +28,7 @@ Some studies pay attention to ML-based PDN IR drop estimation ~\cite{LinFang:201
 The key idea of these methods aims to substitute the standard full-chip IR drop analysis tool to data-driven feature extraction and training. Lin {\it et al.}~\cite{LinFang:2018vts} tried to extract power and physical features from cells and layouts to conduct the full-chip dynamic IR drop analysis. Zhou {\it et al.} \cite{ZhouJin:ICCAD'20} take EM aging effects into consideration with a GAN-based model and extend it to the fast PDN IR drop fixing. However GAN-based strategies have some drawbacks, such as training collapse due to the need to optimize the opposing objectives of the generator and discriminator. 
 
 
-Recently,  VAE  \cite{Diederik:arxiv'22} gained traction as it has better interpretability of latent space, which provides them with a robust mathematical grounding and better generated result in some scenarios. There is already VAE applications in the EDA field, such as David {\it et al.} \cite{ZhuICCAD19:GeniusRoute} adopted VAE for analog routing paradigm.
+Recently,  VAE  \cite{Diederik:arxiv'22} gained traction as it has better interpretability of latent space, which provides them with a robust mathematical grounding and better generated result in some scenarios. There are already VAE applications in the EDA field, such as David {\it et al.} \cite{ZhuICCAD19:GeniusRoute} adopted VAE for analog routing paradigm.
 Based on those observations, we propose a EM-aware IR drop prediction method for on-chip power grid by leveraging the modeling power of VAE. Based on the new prediction model, we further show a fast full-chip power grid IR drop failure fixing framework.Our key contributions are summarized as follows:
 
 \begin{itemlist}
