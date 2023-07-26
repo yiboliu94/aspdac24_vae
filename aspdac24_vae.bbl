@@ -73,43 +73,6 @@ H.~Zhou, L.~Chen, and S.~X.-D. Tan, ``{Robust Power Grid Network Design
   Considering EM Aging Effects for Multi-Segment Wires},'' \emph{Integration,
   the VLSI Journal}, vol.~77, pp. 38--47, Mar. 2021.
 
-\bibitem{HanLiu:TCAD'22-23}
-H.~Zhou, Y.~Liu, W.~Jin, and S.~X.-D. Tan, ``Gridnetopt: Fast full-chip
-  em-aware power grid optimization accelerated by deep neural networks,''
-  \emph{IEEE Transactions on Computer-Aided Design of Integrated Circuits and
-  Systems}, 2021, accepted.
-
-\bibitem{Diederik:arxiv'22}
-M.~W. Diederik P~Kingma, ``{Auto-Encoding Variational Bayes},'' \emph{arXiv
-  e-prints}, p. arXiv:1312.6114v11, December 2022.
-
-\bibitem{SunYu:TDMR'20}
-Z.~Sun, S.~Yu, H.~Zhou, Y.~Liu, and S.~X.-D. Tan, ``{EMSpice: Physics-Based
-  Electromigration Check Using Coupled Electronic and Stress Simulation},''
-  \emph{IEEE Transactions on Device and Materials Reliability}, vol.~20, no.~2,
-  pp. 376--389, Jun. 2020.
-
-\bibitem{Huang:TCAD'15}
-X.~Huang, A.~Kteyan, S.~X.-D. Tan, and V.~Sukharev, ``{Physics-Based
-  Electromigration Models and Full-Chip Assessment for Power Grid Networks},''
-  \emph{IEEE Trans. on Computer-Aided Design of Integrated Circuits and
-  Systems}, vol.~35, no.~11, pp. 1848--1861, 2016.
-
-\bibitem{Chatterjee:2018TCAD}
-S.~Chatterjee, V.~Sukharev, and F.~N. Najm, ``{Power Grid Electromigration
-  Checking Using Physics-Based Models},'' \emph{IEEE Transactions on
-  Computer-Aided Design of Integrated Circuits and Systems}, vol.~37, no.~7,
-  pp. 1317--1330, Jul. 2018.
-
-\bibitem{SukharevNajm:2018TDMR}
-V.~Sukharev and F.~N. Najm, ``{Electromigration Check: Where the Design and
-  Reliability Methodologies Meet},'' \emph{IEEE Transactions on Device and
-  Materials Reliability}, vol.~18, no.~4, pp. 498--507, Dec. 2018.
-
-\bibitem{EMspiceSourceCode}
-``{EMspice -- Coupled EM-IR Analysis Tool for Full-Chip Power Grid EM Check and
-  Sign-off},'' 2020, \url{https://github.com/sheldonucr/EMspice}.
-
 \bibitem{LinFang:2018vts}
 S.-Y. Lin, Y.-C. Fang, Y.-C. Li, Y.-C. Liu, T.-S. Yang, S.-C. Lin, C.-M. Li,
   and E.~J.-W. Fang, ``{IR Drop Prediction of ECO-Revised Circuits Using
@@ -143,6 +106,49 @@ V.~A. Chhabria, V.~Ahuja, A.~Prabhu, N.~Patil, P.~Jain, and S.~S. Sapatnekar,
   ``{Thermal and IR drop analysis using convolutional encoder-decoder
   networks},'' in \emph{{Proceedings of the 26th Asia and South Pacific Design
   Automation Conference}}, 2021, pp. 690--696.
+
+\bibitem{Diederik:arxiv'22}
+M.~W. Diederik P~Kingma, ``{Auto-Encoding Variational Bayes},'' \emph{arXiv
+  e-prints}, p. arXiv:1312.6114v11, December 2022.
+
+\bibitem{ZhuICCAD19:GeniusRoute}
+K.~Zhu, M.~Liu, Y.~Lin, B.~Xu, S.~Li, X.~Tang, N.~Sun, and D.~Z. Pan,
+  ``Geniusroute: A new analog routing paradigm using generative neural network
+  guidance,'' in \emph{2019 IEEE/ACM International Conference on Computer-Aided
+  Design (ICCAD)}, 2019, pp. 1--8.
+
+\bibitem{SunYu:TDMR'20}
+Z.~Sun, S.~Yu, H.~Zhou, Y.~Liu, and S.~X.-D. Tan, ``{EMSpice: Physics-Based
+  Electromigration Check Using Coupled Electronic and Stress Simulation},''
+  \emph{IEEE Transactions on Device and Materials Reliability}, vol.~20, no.~2,
+  pp. 376--389, Jun. 2020.
+
+\bibitem{Huang:TCAD'15}
+X.~Huang, A.~Kteyan, S.~X.-D. Tan, and V.~Sukharev, ``{Physics-Based
+  Electromigration Models and Full-Chip Assessment for Power Grid Networks},''
+  \emph{IEEE Trans. on Computer-Aided Design of Integrated Circuits and
+  Systems}, vol.~35, no.~11, pp. 1848--1861, 2016.
+
+\bibitem{Chatterjee:2018TCAD}
+S.~Chatterjee, V.~Sukharev, and F.~N. Najm, ``{Power Grid Electromigration
+  Checking Using Physics-Based Models},'' \emph{IEEE Transactions on
+  Computer-Aided Design of Integrated Circuits and Systems}, vol.~37, no.~7,
+  pp. 1317--1330, Jul. 2018.
+
+\bibitem{SukharevNajm:2018TDMR}
+V.~Sukharev and F.~N. Najm, ``{Electromigration Check: Where the Design and
+  Reliability Methodologies Meet},'' \emph{IEEE Transactions on Device and
+  Materials Reliability}, vol.~18, no.~4, pp. 498--507, Dec. 2018.
+
+\bibitem{EMspiceSourceCode}
+``{EMspice -- Coupled EM-IR Analysis Tool for Full-Chip Power Grid EM Check and
+  Sign-off},'' 2020, \url{https://github.com/sheldonucr/EMspice}.
+
+\bibitem{HanLiu:TCAD'22-23}
+H.~Zhou, Y.~Liu, W.~Jin, and S.~X.-D. Tan, ``Gridnetopt: Fast full-chip
+  em-aware power grid optimization accelerated by deep neural networks,''
+  \emph{IEEE Transactions on Computer-Aided Design of Integrated Circuits and
+  Systems}, 2021, accepted.
 
 \bibitem{ZhouSun:ASPDAC'18}
 H.~Zhou, Y.~Sun, Z.~Sun, H.~Zhao, and S.~X.-D. Tan,

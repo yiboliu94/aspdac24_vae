@@ -5,7 +5,7 @@ In this section, we first summarize and review some related preliminary works of
 
 \subsection{Full-chip EM-induced IR drop analysis}
 \label{subsec:emspice}
-As mentioned in the previous section, EM is a physical phenomenon that can lead to resistance increase or even open-wire segments.  The IR drop of the power grid wires may change due to the EM-induced aging effect. With enough wires nucleate, the EM-induced IR drop eventually leads to timing violations. This means we have to consider the power girds IR drop as time-varying characters ~\cite{SunYu:TDMR'20, Huang:TCAD'15, Chatterjee:2018TCAD,SukharevNajm:2018TDMR}. 
+As mentioned in the previous section, EM is a physical phenomenon that can lead to resistance increase or even open-wire segments.  The IR drop of the power grid wires may change due to the EM-induced aging effect. This means we have to consider the power girds IR drop as time-varying characters ~\cite{SunYu:TDMR'20, Huang:TCAD'15, Chatterjee:2018TCAD,SukharevNajm:2018TDMR}. 
 On the other hand, the failed wire segments change the current distributions of all the interconnect wires, which may further accelerate the failure process. Hence, to emulate the on-chip power grid IR-drop after aging effect, one has to consider the interplay between the two physics: electrical characteristics and hydrostatic stress in the interconnect wires.
 
 {\it EMspice}~\cite{SunYu:TDMR'20,EMspiceSourceCode} is an open source tool that conducts the full-chip power grid network coupled EM-IR drop simulation with the dynamic interplay between the hydrostatic stress and electronic current/voltage. It solves the coupled time-varying partial differential equations in the time domain to obtain the stress evolution, and finally reports resulted IR drop and EM failure hotspots at the target aging time, such as 10 years.  The tool consists of a finite difference time domain (FDTD) solver for EM stress and a linear network DC solver for IR drop. The linear network IR drop solver passes time-dependent current densities and P/G layout information to the finite difference time domain (FDTD) EM solver, and the FDTD EM solver provides the IR drop solver with new resistance information. These two simulations are coupled together and must be solved together, which can be described as
@@ -34,13 +34,12 @@ In the above equations, ${\bf M}(t)$ is the time varying power grid conductance 
 
 %There are numerical methods to conduct power grid IR drop analysis, such as hierarchical methods, random walk methods, Krylov-subspace methods, multi-grid techniques, and vector-less verification methods.
 
-
-Recent studies pay attention to ML-based PDN IR drop estimation ~\cite{LinFang:2018vts,Fang:2018dynireco,HoKahng:ICCAD'19,Xie:2020powernet,Sachin:ASPDAC'21} to reduce the design time. 
-The key idea of these methods aims to substitute the standard full-chip IR drop analysis tool to data-driven feature extraction and training. Lin {\it et al.}~\cite{LinFang:2018vts} tried to extract power and physical features from cells and layouts to conduct the full-chip dynamic IR drop analysis. Fang {\it et al.}~\cite{Fang:2018dynireco} proposed to training the models for the localized layout region to improve the scalability.  A convolutional neural network (CNN) based model that is able to incorporate design-dependent features during pre-processing is proposed by Xie {\it et al.}~\cite{Xie:2020powernet}. Ho {\it et al.}~\cite{HoKahng:ICCAD'19} proposed incremental IR drop prediction and mitigation by applying more electrical and physical features for the gradient boosting framework training. Chhabria {\it et al.}~\cite{Sachin:ASPDAC'21} proposed {\it IREDGe}, which is a CNN-based generative network method to predict on-chip IR drop contours with image-to-image and sequence-to-sequence translation tasks. 
-
-These machine learning methods indeed have achieved significant progress in IR drop estimation, but none of them takes EM aging effects into consideration. Recently Zhou {\it et al.}~\cite{ZhouJin:ICCAD'20} proposed an EM-induced IR drop analysis framework based on conditional GAN model. The framework regards the time and selected electrical features as input images and outputs the voltage map. ~\cite{ZhouJin:ICCAD'20} also demonstrates that the trained ML models can help accelerating the PDN optimization task by providing the sensitivity of objective EM-induced IR-drop with respect to the initial wire resistances. 
-However the GAN-based models have some drawbacks inherited from the standard autoencoder structure, such as lack of continuity and interpretability of the latent space. It also suffers from the difficulties to train both the generator and discriminator together. 
-In this work, we propose to alleviate these issues by leveraging the {\it VAE}-based structure for full-chip power grid EM-induced IR drop estimation and optimization.
+Recent studies apply ML-based method to accelerate the PDN IR drop estimation.
+Fang {\it et al.}~\cite{Fang:2018dynireco} proposed to training the models for the localized layout region to improve the scalability.  A convolutional neural network (CNN) model that is able to incorporate design-dependent features during pre-processing is proposed by Xie {\it et al.}~\cite{Xie:2020powernet}. Ho {\it et al.}~\cite{HoKahng:ICCAD'19} proposed incremental IR drop prediction and mitigation by applying more electrical and physical features for the gradient boosting framework training. Chhabria {\it et al.}~\cite{Sachin:ASPDAC'21} proposed {\it IREDGe}, which is a CNN-based generative network method to predict on-chip IR drop contours with image-to-image and sequence-to-sequence translation tasks. 
+These machine learning methods indeed have achieved significant progress in IR drop estimation, but either none of them takes EM aging effects into consideration
+ 
+ Recently Zhou {\it et al.}~\cite{ZhouJin:ICCAD'20} proposed an EM-aware IR drop analysis framework based on conditional GAN model. This method regards the time and selected electrical features as input images and outputs the voltage map. ~\cite{ZhouJin:ICCAD'20} also demonstrates the trained ML models can help accelerating the PDN optimization task by providing the sensitivity of objective EM-induced IR-drop with respect to the initial wire resistances. It was initially applied to localized PDN optimization then has been extended to full-chip optimization~\cite{HanLiu:TCAD'22-23}.
+However the GAN-based models suffers from the difficulties to train both the generator and discriminator together. Also the deterministic latent variable encoding and decoding approach used by GAN model, which inherited from the standard autoencoder structure, makes the latent space lack of continuity and interpretability. 
 
 
 \subsection{Existing EM-aware PDN optimization}
@@ -60,7 +59,11 @@ The solving process is severely time-consuming, especially when the power grid i
  % We hereby propose our DNN-based machine learning method to accelerate this optimization approach. We replace the
 
 \subsection{Variational Autoencoder}
-In this paper, we adope VAE~\cite{Diederik:arxiv'22} as the machine learnig models for the EM-aware IR drop estimations. VAE follows the similar structure of autoencoder, which consists of encoder and decoders neural networks. The encoder compress the data into the low dimentional latent variables and decoders generate  new data from the latent variables. 
+In this paper, we adopt VAE~\cite{Diederik:arxiv'22} as the machine learning models for the EM-aware IR drop estimations. 
+VAE follows the similar structure of autoencoder(AE).
+
+The traditional AE structure, as shown in Fig.\ref{fig:ae}, includes encoder and decoder structures. A input will be encoded to low dimensional latent variables by the encoder, and then decoded to the output by the decoder.  
+The GAN model adopts the standard AE as a \textit{generator} to generate the result, and use an additional binary output CNN as the discriminative network only in the training stage to better train the autoencoder. 
 
 
 \begin{figure}[htp]
@@ -75,6 +78,42 @@ In this paper, we adope VAE~\cite{Diederik:arxiv'22} as the machine learnig mode
 	\label{fig:compare_ae_vae}
 \end{figure}
 
+
+ 
+Variational autoencoder, as shown in  Fig.\ref{fig:vae}, is a type of unique generative model derived from the standard autoencoder, which are used to generate new data that is similar to the input data they're trained on. 
+Compared to traditional autoencoder structure, VAE does not directly encode the input to a determined latent variable, instead its encoded to a distribution over the latent space $Q(Z|X)$, and then sampling from this distribution to generate a latent variable for the decoder. This step is crucial to the VAE's some crucial characteristics over AE and AE-based GAN model, such as Interpretability of Latent Space, and Training Stability.
+Interpretability of Latent Space means that the latent space is smooth and interpretable, enabling nice properties like the ability to interpolate between different points in the latent space and generate new samples that exhibit a smooth transition between the characteristics of the original points. On the other hand, AE does not explicitly enforce such a structure, making the latent space less interpretable and interpolations might not always produce meaningful outputs. 
+Usually the VAE latent variable $z$ is generated using a reparameterization approach to ensure the model gradient descent back propagation. We denote the mean of $Q(Z|X)$ as $\mu$ and the standard deviation as $\sigma$, and sample $\epsilon \sim \mathcal{N}(\textbf{0}, \textbf{I} ) $, then compute z as equation.\eqref{eq:z_compute}:
+
+\begin{equation}
+	\label{eq:z_compute}
+	z = \mu(\textit{X}) + \sigma \ast \epsilon(\textit{X})
+\end{equation}
+
+
+The Loss function for a VAE contains two parts. The first part is the \textit{reconstruction loss}, also called \textit{prediction loss} when the input and output are expected to be different. The prediction loss measures the difference between the decoded result $\hat{y} = P(\hat{y}|z)$ and label $y$, encourages the decoded output data to be similar to the label. As our data is continuous, we allocate the mean squared error (MSE) for the prediction loss evaluation \eqref{eq:vae_MSE_loss}, where N is the total number of output pixels.
+\begin{equation}
+	\label{eq:vae_MSE_loss}
+	\textit{MSE}(y, \hat{y}) = \frac{1}{N} \sum_{1}^{N} ( y - \hat{y})^{2}
+\end{equation}
+The second part is the Kullback-Leibler (KL) divergence between the latent variable distribution $Q(z|x)$ output by the encoder and a chosen prior distribution, usually a standard multivariate gaussian distribution $\mathcal{N}(\textbf{0}, \textbf{I})$. The KL divergence measures how one probability distribution is different from a second, which acts as a regularization term to force the encoded latent distribution from the given training dataset to be close to a standard normal distribution, and encourage the network to use the latent space efficiently. 
+The KL divergence can be written as:
+%$\mathcal{N}(\mu_{x}, \sigma_{x}^{2})$ 
+
+\begin{equation}
+	\label{eq:vae_KLD_loss}
+	D_{KL}( \mathcal{N}(\mu_{x}, \sigma_{x}^{2}) ~ || ~ \mathcal{N}(\textbf{0}, \textbf{I} ) )  = \dfrac{1}{2} (-\log\sigma^{2} + \mu^{2} + \sigma^{2} - 1)
+\end{equation}
+
+Hence the training target is to minimize the total loss:
+\begin{equation}
+	\label{eq:vae_total_loss}
+	%\min_{\theta}  \{  \textit{MSE} (y , \hat{y} )   ~ + ~  D_{KL}( \mathcal{N}(\mu_{x}, \sigma_{x}^{2}) ~ || ~ \mathcal{N}(\textbf{0}, \textbf{I} ) )  \}
+	\min  \{ \textit{MSE} (y, \hat{y})  ~ + ~  D_{KL}( \mathcal{N}(\mu_{x}, \sigma_{x}^{2}) ~ || ~ \mathcal{N}(\textbf{0}, \textbf{I} ) )  \}
+\end{equation}
+
+
+
 %\begin{figure}[htp]
 %	\centering
 %	\includegraphics[width=0.8\columnwidth]{./figs/vae_brief.eps}
@@ -83,6 +122,3 @@ In this paper, we adope VAE~\cite{Diederik:arxiv'22} as the machine learnig mode
 %	\label{fig:vae}
 %\end{figure}
 
-
-
-Specifically, 
