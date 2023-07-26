@@ -79,6 +79,10 @@ H.~Zhou, Y.~Liu, W.~Jin, and S.~X.-D. Tan, ``Gridnetopt: Fast full-chip
   \emph{IEEE Transactions on Computer-Aided Design of Integrated Circuits and
   Systems}, 2021, accepted.
 
+\bibitem{Diederik:arxiv'22}
+M.~W. Diederik P~Kingma, ``{Auto-Encoding Variational Bayes},'' \emph{arXiv
+  e-prints}, p. arXiv:1312.6114v11, December 2022.
+
 \bibitem{SunYu:TDMR'20}
 Z.~Sun, S.~Yu, H.~Zhou, Y.~Liu, and S.~X.-D. Tan, ``{EMSpice: Physics-Based
   Electromigration Check Using Coupled Electronic and Stress Simulation},''

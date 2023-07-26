@@ -60,6 +60,29 @@ The solving process is severely time-consuming, especially when the power grid i
  % We hereby propose our DNN-based machine learning method to accelerate this optimization approach. We replace the
 
 \subsection{Variational Autoencoder}
-In this paper, we adope VAE~\cite{xxx} as the machine learnig models for the EM-aware IR drop estimations. VAE follows the similar structure of autoencoder, which consists of encoder and decoders neural networks. The encoder compress the data into the low dimentional latent variables and decoders generate  new data from the latent variables. 
+In this paper, we adope VAE~\cite{Diederik:arxiv'22} as the machine learnig models for the EM-aware IR drop estimations. VAE follows the similar structure of autoencoder, which consists of encoder and decoders neural networks. The encoder compress the data into the low dimentional latent variables and decoders generate  new data from the latent variables. 
+
+
+\begin{figure}[htp]
+	\centering
+	\subfigure[]{
+		\includegraphics[width=0.9\columnwidth, height = 3cm]{./figs/ae_brief.eps}
+		\label{fig:ae}}
+	\subfigure[]{
+		\includegraphics[width=0.8\columnwidth]{./figs/vae_brief.eps}
+		\label{fig:vae}}
+	\caption{(a) Architecture of an auto encoder (b)Architecture of a variational auto encoder }
+	\label{fig:compare_ae_vae}
+\end{figure}
+
+%\begin{figure}[htp]
+%	\centering
+%	\includegraphics[width=0.8\columnwidth]{./figs/vae_brief.eps}
+%	\label{fig:ae_vs_vae}
+%	\caption{Architecture of a variational auto encoder }
+%	\label{fig:vae}
+%\end{figure}
+
+
 
 Specifically, 

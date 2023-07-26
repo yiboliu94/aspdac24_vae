@@ -28,7 +28,7 @@ The VAE-based EM-aware IR-drop prediction model structure is shown in Fig.\ref{f
 The VAE model contain four convolutional layers and two fully-connected layers. The input is first padded to the standard size of 64 x 64 for the power grid smaller than this size. If the power grid exceeds the size of 64 x 64 but smaller than 128 x 128, then we add one more convolutional layer in both the generator and the discriminator network. For the further larger or smaller sized power grid, we follow the same routine to add or remove the convolutional layers to fit the input size.
 \begin{figure*}[h!]
 	\centering
-	\includegraphics[width=1.8\columnwidth]{./figs/vae.eps}
+	\includegraphics[width=1.8\columnwidth]{./figs/vae_detail.eps}
 	\caption{VAE-based model for EM-aware IR drop prediction} 
 	\label{fig:VAE_architecture}
 \end{figure*}
@@ -91,7 +91,7 @@ Then we parse the electrical features and the topological information from the c
 
 
 
-\subsection{power grid EM-aware IR-drop failure fixing framework }
+\subsection{power grid EM-aware IR drop fixing framework }
 \label{subsec:formulation}
 
 The structure of the combined VAE-based model and the proposed workflow of the fixing strategy is shown in Fig.~\ref{fig:flow}. 
@@ -107,14 +107,14 @@ The structure of the combined VAE-based model and the proposed workflow of the f
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.98\columnwidth]{./figs/flow.eps}
-	\caption{The proposed framework of VAE-accelerated power gird fixing method.}
+	\caption{Framework of power gird IR drop fixing method accelerated by the VAE model.}
 	\label{fig:flow}
 \end{figure}
 
 \subsubsection{problem formulation}
 \label{subsubsec:formulation}
 The proposed method intends to solve the following problem: 
-Given the power grid information at T=0, our VAE-based model has predict the EM-aware IR-drop the target aging life time \textit{\textbf{t}} in ~\ref{subsec:vae}.The power grid has EM-induced IR drop violations and demands fixing if it has node voltage drop \textit{\textbf{v}}  above the threshold $V_{th}$.
+Given the power grid information at T=0, our VAE-based model has predict the EM-aware IR drop the target aging life time \textit{\textbf{t}} in ~\ref{subsec:vae}.The power grid has EM-induced IR drop violations and demands fixing if it has node voltage drop \textit{\textbf{v}}  above the threshold $V_{th}$.
 We wish to alleviate the EM-aware IR drop failure by resizing the power grid interconnect trees width with minimum metal area increase.
 
 The problem can be formulated as:
