@@ -73,39 +73,11 @@ H.~Zhou, L.~Chen, and S.~X.-D. Tan, ``{Robust Power Grid Network Design
   Considering EM Aging Effects for Multi-Segment Wires},'' \emph{Integration,
   the VLSI Journal}, vol.~77, pp. 38--47, Mar. 2021.
 
-\bibitem{LinFang:2018vts}
-S.-Y. Lin, Y.-C. Fang, Y.-C. Li, Y.-C. Liu, T.-S. Yang, S.-C. Lin, C.-M. Li,
-  and E.~J.-W. Fang, ``{IR Drop Prediction of ECO-Revised Circuits Using
-  Machine Learning},'' in \emph{{Proceedings of the 36th VLSI Test Symposium}},
-  ser. VTS '18.\hskip 1em plus 0.5em minus 0.4em\relax New York, NY: {IEEE
-  Press}, Apr. 2018, pp. 1--6.
-
-\bibitem{Fang:2018dynireco}
-Y.-C. Fang, H.-Y. Lin, M.-Y. Sui, C.-M. Li, and E.~J.-W. Fang,
-  ``{Machine-learning-based Dynamic IR Drop Prediction for ECO},'' in
-  \emph{{Proceedings of the 37th International Conference on Computer-Aided
-  Design}}, ser. ICCAD '18.\hskip 1em plus 0.5em minus 0.4em\relax New York,
-  NY: ACM Press, Nov. 2018, pp. 1--7.
-
-\bibitem{HoKahng:ICCAD'19}
-C.-T. Ho and A.~B. Kahng, ``{IncPIRD: Fast Learning-Based Prediction of
-  Incremental IR Drop},'' in \emph{{Proceedings of the 38th International
-  Conference on Computer-Aided Design}}, ser. ICCAD '19.\hskip 1em plus 0.5em
-  minus 0.4em\relax New York, NY: {IEEE Press}, Nov. 2019, pp. 1--8.
-
-\bibitem{Xie:2020powernet}
-Z.~Xie, H.~Ren, B.~Khailany, Y.~Sheng, S.~Santosh, J.~Hu, and Y.~Chen,
-  ``{PowerNet: Transferable Dynamic IR Drop Estimation via Maximum
-  Convolutional Neural Network},'' in \emph{{Proceedings of the 25th Asia and
-  South Pacific Design Automation Conference}}, ser. ASP-DAC '20.\hskip 1em
-  plus 0.5em minus 0.4em\relax New York, NY: {IEEE Press}, Jan. 2020, pp.
-  13--18.
-
-\bibitem{Sachin:ASPDAC'21}
-V.~A. Chhabria, V.~Ahuja, A.~Prabhu, N.~Patil, P.~Jain, and S.~S. Sapatnekar,
-  ``{Thermal and IR drop analysis using convolutional encoder-decoder
-  networks},'' in \emph{{Proceedings of the 26th Asia and South Pacific Design
-  Automation Conference}}, 2021, pp. 690--696.
+\bibitem{HanLiu:TCAD'22-23}
+H.~Zhou, Y.~Liu, W.~Jin, and S.~X.-D. Tan, ``Gridnetopt: Fast full-chip
+  em-aware power grid optimization accelerated by deep neural networks,''
+  \emph{IEEE Transactions on Computer-Aided Design of Integrated Circuits and
+  Systems}, 2021, accepted.
 
 \bibitem{Diederik:arxiv'22}
 M.~W. Diederik P~Kingma, ``{Auto-Encoding Variational Bayes},'' \emph{arXiv
@@ -144,11 +116,39 @@ V.~Sukharev and F.~N. Najm, ``{Electromigration Check: Where the Design and
 ``{EMspice -- Coupled EM-IR Analysis Tool for Full-Chip Power Grid EM Check and
   Sign-off},'' 2020, \url{https://github.com/sheldonucr/EMspice}.
 
-\bibitem{HanLiu:TCAD'22-23}
-H.~Zhou, Y.~Liu, W.~Jin, and S.~X.-D. Tan, ``Gridnetopt: Fast full-chip
-  em-aware power grid optimization accelerated by deep neural networks,''
-  \emph{IEEE Transactions on Computer-Aided Design of Integrated Circuits and
-  Systems}, 2021, accepted.
+\bibitem{LinFang:2018vts}
+S.-Y. Lin, Y.-C. Fang, Y.-C. Li, Y.-C. Liu, T.-S. Yang, S.-C. Lin, C.-M. Li,
+  and E.~J.-W. Fang, ``{IR Drop Prediction of ECO-Revised Circuits Using
+  Machine Learning},'' in \emph{{Proceedings of the 36th VLSI Test Symposium}},
+  ser. VTS '18.\hskip 1em plus 0.5em minus 0.4em\relax New York, NY: {IEEE
+  Press}, Apr. 2018, pp. 1--6.
+
+\bibitem{Fang:2018dynireco}
+Y.-C. Fang, H.-Y. Lin, M.-Y. Sui, C.-M. Li, and E.~J.-W. Fang,
+  ``{Machine-learning-based Dynamic IR Drop Prediction for ECO},'' in
+  \emph{{Proceedings of the 37th International Conference on Computer-Aided
+  Design}}, ser. ICCAD '18.\hskip 1em plus 0.5em minus 0.4em\relax New York,
+  NY: ACM Press, Nov. 2018, pp. 1--7.
+
+\bibitem{HoKahng:ICCAD'19}
+C.-T. Ho and A.~B. Kahng, ``{IncPIRD: Fast Learning-Based Prediction of
+  Incremental IR Drop},'' in \emph{{Proceedings of the 38th International
+  Conference on Computer-Aided Design}}, ser. ICCAD '19.\hskip 1em plus 0.5em
+  minus 0.4em\relax New York, NY: {IEEE Press}, Nov. 2019, pp. 1--8.
+
+\bibitem{Xie:2020powernet}
+Z.~Xie, H.~Ren, B.~Khailany, Y.~Sheng, S.~Santosh, J.~Hu, and Y.~Chen,
+  ``{PowerNet: Transferable Dynamic IR Drop Estimation via Maximum
+  Convolutional Neural Network},'' in \emph{{Proceedings of the 25th Asia and
+  South Pacific Design Automation Conference}}, ser. ASP-DAC '20.\hskip 1em
+  plus 0.5em minus 0.4em\relax New York, NY: {IEEE Press}, Jan. 2020, pp.
+  13--18.
+
+\bibitem{Sachin:ASPDAC'21}
+V.~A. Chhabria, V.~Ahuja, A.~Prabhu, N.~Patil, P.~Jain, and S.~S. Sapatnekar,
+  ``{Thermal and IR drop analysis using convolutional encoder-decoder
+  networks},'' in \emph{{Proceedings of the 26th Asia and South Pacific Design
+  Automation Conference}}, 2021, pp. 690--696.
 
 \bibitem{ZhouSun:ASPDAC'18}
 H.~Zhou, Y.~Sun, Z.~Sun, H.~Zhao, and S.~X.-D. Tan,
