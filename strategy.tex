@@ -30,10 +30,41 @@ We use VAE as the backbone for our EM-aware IR-drop prediction model. The struct
 The model input consists of four channels. They are the power grid branch conductance splitted into vertical conductance $\mathbb{R} ^{64\times 64\times 1}$ and horizontal conductance $\mathbb{R} ^{64\times 64\times 1}$, the current source $\mathbb{R} ^{64\times 64\times 1}$ drawn to other circuit layers, and a target life time $\textit{\textbf{t}} $expanded into $\mathbb{R} ^{64\times 64\times 1}$ by channel-wise duplication as the conditional information. Hence the total input will be 64x64x4. 
 The conductance and current are normalized, then the input $\textit{\textbf{x}}$ is sent into the encoder and encoded as $ \mu_{x} $  and $ \sigma_{x}$. 
 In this example, the encoder contains of four convolutional layers followed by two fully-connected layers. The detailed dimensions of the layer have been indicated in Fig.\ref{fig:VAE_architecture}. 
-Next we use the reparameterization trick as described in \ref{subsec:vae_intro}  to sample and obtain the latent variable $\textbf{z}$ and send it to the decoder.
+Next we use the reparameterization trick as described in \ref{subsec:vae_intro}  to sample and obtain the latent variable $\textbf{z}$ and send it to the decoder. The latent variable $\textbf{z}$ is a 1x20 vector.
 The decoder is designed to mirror the architecture of the encoder in a symmetric manner, except the output layer has only one channel. The output is $\mathbb{R} ^{64\times 64\times 1}$ EM aware IR drop at target aging year.
 If the power grid exceeds the size of 64 x 64 but smaller than 128 x 128, then we pad the input into the standard size of 128 x 128 and add one more convolutional layer in both the encoder and the decoder network. 
 For the smaller sized power grid, we follow the same routine remove the convolutional layer to fit the input size.
+
+The Loss function for a VAE contains two parts. The first part is the \textit{reconstruction loss}, also called \textit{prediction loss} when the input and output are expected to be different. The prediction loss measures the difference between the decoded result $\hat{y} = P(\hat{y}|z)$ and real data $y$, encourages the decoded output data to be similar to the label. As our data is continuous, we allocate the mean squared error (MSE) for the prediction loss evaluation \eqref{eq:vae_MSE_loss}, where N is the total number of output pixels.
+\begin{equation}
+	\label{eq:vae_MSE_loss}
+	\textit{MSE}(y, \hat{y}) = \frac{1}{N} \sum_{1}^{N} ( y - \hat{y})^{2}
+\end{equation}
+The second part is the \textit{Kullback-Leibler (KL) divergence} between the latent variable distribution $Q(z|x)$ output by the encoder and a chosen prior distribution, usually a standard multivariate gaussian distribution $\mathcal{N}(\textbf{0}, \textbf{I})$. The \textit{KL divergence} measures how one probability distribution is different from a second, which acts as a regularization term to force the encoded latent distribution from the given training dataset to be close to a standard normal distribution, and encourage the network to use the latent space efficiently. 
+The \textit{KL divergence} in VAE can be written as:
+%$\mathcal{N}(\mu_{x}, \sigma_{x}^{2})$ 
+
+\begin{equation}
+	\label{eq:vae_KLD_loss}
+	D_{KL}( \mathcal{N}(\mu_{x}, \sigma_{x}^{2}) ~ || ~ \mathcal{N}(\textbf{0}, \textbf{I} ) )  = \dfrac{1}{2} (-\log\sigma^{2} + \mu^{2} + \sigma^{2} - 1)
+\end{equation}
+
+Hence the training target is to minimize the total loss:
+\begin{equation}
+	\label{eq:vae_total_loss}
+	%\min_{\theta}  \{  \textit{MSE} (y , \hat{y} )   ~ + ~  D_{KL}( \mathcal{N}(\mu_{x}, \sigma_{x}^{2}) ~ || ~ \mathcal{N}(\textbf{0}, \textbf{I} ) )  \}
+	\min  \{ \textit{MSE} (y, \hat{y})  ~ + ~  D_{KL}( \mathcal{N}(\mu_{x}, \sigma_{x}^{2}) ~ || ~ \mathcal{N}(\textbf{0}, \textbf{I} ) )  \}
+\end{equation}
+
+
+We measure the prediction accuracy is root-mean-square-error (RMSE), the unit is mV, as shown in \eqref{eq:RMSE}.
+\begin{equation}
+	\label{eq:RMSE}
+	\textit{RMSE} =\sqrt{ \frac{1}{N} \sum_{1}^{N} ( y - \hat{y})^{2} }
+\end{equation}
+
+
+
 
 
 %During training, the VAE learns to map the input data to a lower-dimensional latent space in a way that it can generate similar data from points in this space. Because of the probabilistic nature of the encoding, and the use of the KL divergence in the loss function, the VAE is encouraged to create a smooth and continuous latent space, where similar points decode to similar data.
