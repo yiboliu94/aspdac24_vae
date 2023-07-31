@@ -52,10 +52,9 @@ The \textit{KL divergence} in VAE can be written as:
 Hence the training target is to minimize the total loss:
 \begin{equation}
 	\label{eq:vae_total_loss}
-	%\min_{\theta}  \{  \textit{MSE} (y , \hat{y} )   ~ + ~  D_{KL}( \mathcal{N}(\mu_{x}, \sigma_{x}^{2}) ~ || ~ \mathcal{N}(\textbf{0}, \textbf{I} ) )  \}
-	\min  \{ \textit{MSE} (y, \hat{y})  ~ + ~  D_{KL}( \mathcal{N}(\mu_{x}, \sigma_{x}^{2}) ~ || ~ \mathcal{N}(\textbf{0}, \textbf{I} ) )  \}
+	\min  \{ \textit{MSE} (y, \hat{y})  ~ + ~ \lambda \cdot D_{KL}( \mathcal{N}(\mu_{x}, \sigma_{x}^{2}) ~ || ~ \mathcal{N}(\textbf{0}, \textbf{I} ) )  \}
 \end{equation}
-
+where $\lambda$ is the hyper parameter that adjusted similar to~\cite{Fu:arxiv'19} to prevent KL vanishing.
 
 We measure the prediction accuracy in root-mean-square-error (RMSE)  \eqref{eq:RMSE}, the unit is mV
 \begin{equation}

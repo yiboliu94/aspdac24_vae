@@ -161,16 +161,14 @@
 % synthesized power grid benchmarks from ARM Cortex-M0 processor design.
 
 
-In conclusion, our work introduces a novel variational autoencoder
-(VAE) based full-chip EM-aware IR drop estimation model, referred to
-as {\it GridVAE},  tailored specifically for on-chip power grid
-networks. Leveraging deep neural network models, {\it GridVAE} allows rapid
+In conclusion, our work introduces a novel VAE-based full-chip EM-aware IR drop estimation model, referred to as {\it GridVAE},  tailored specifically for on-chip power grid networks. 
+Leveraging PyTorch automatic differentiation, {\it GridVAE} allows rapid
 sensitivity computations of the target cost function concerning wire
 geometries, enabling accelerated power grid fixing through a recently
 proposed linear programming-based optimization framework. The
 numerical results attest to the superiority of {\it GridVAE} over recently
-proposed GAN-based models, with a notable 40\% reduction in Root Mean
-Square Error (RMSE). Additionally, our GridVAE-accelerated method
+proposed GAN-based models, with a notable 40\% reduction in RMSE.
+Additionally, our GridVAE-accelerated method
 demonstrates an impressive up to 80X speedup (at least one order of
 magnitude) compared to conventional SLP-based approaches when applied
 to synthesized power grid benchmarks from ARM Cortex-M0 processor
