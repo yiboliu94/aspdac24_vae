@@ -147,21 +147,38 @@
 
 \section{Conclusion}
 \label{sec:conclusion}
-In this paper, we proposed a variational autoencoder (VAE) based
-full-chip EM-aware IR drop estimation model, called {\it GridVAE}, for
-on-chip power grid networks. The new deep neural network models allow
-fast sensitivity computations of target cost function with respect to
-the wire geometries. This enable accelerated power grid fixing based
-on a recently proposed linear programming based optimization
-framework.  The numerical results show that {\it GridVAE} is better
-than recently proposed recently proposed GAN-based model with 40$\%$
-RMSE reduction.  Furthermore, we show the proposed {\it
-  GridVAE}-accelerated method can lead up to 80X (at least one order
-of magnitude) speedup over the conventional SLP-based method on
-synthesized power grid benchmarks from ARM Cortex-M0 processor design.
+% In this paper, we proposed a variational autoencoder (VAE) based
+% full-chip EM-aware IR drop estimation model, called {\it GridVAE}, for
+% on-chip power grid networks. The new deep neural network models allow
+% fast sensitivity computations of target cost function with respect to
+% the wire geometries. This enable accelerated power grid fixing based
+% on a recently proposed linear programming based optimization
+% framework.  The numerical results show that {\it GridVAE} is better
+% than recently proposed recently proposed GAN-based model with 40$\%$
+% RMSE reduction.  Furthermore, we show the proposed {\it
+%   GridVAE}-accelerated method can lead up to 80X (at least one order
+% of magnitude) speedup over the conventional SLP-based method on
+% synthesized power grid benchmarks from ARM Cortex-M0 processor design.
 
 
-
+In conclusion, our work introduces a novel variational autoencoder
+(VAE) based full-chip EM-aware IR drop estimation model, referred to
+as {\it GridVAE},  tailored specifically for on-chip power grid
+networks. Leveraging deep neural network models, GridVAE allows rapid
+sensitivity computations of the target cost function concerning wire
+geometries, enabling accelerated power grid fixing through a recently
+proposed linear programming-based optimization framework. The
+numerical results attest to the superiority of {\it GridVAE} over recently
+proposed GAN-based models, with a notable 40\% reduction in Root Mean
+Square Error (RMSE). Additionally, our GridVAE-accelerated method
+demonstrates an impressive up to 80X speedup (at least one order of
+magnitude) compared to conventional SLP-based approaches when applied
+to synthesized power grid benchmarks from ARM Cortex-M0 processor
+design. These findings underscore the potential of GridVAE as a
+promising tool for enhancing power grid optimization in modern
+nanometer-scale chip technologies, providing valuable insights into
+efficient and accurate solutions for addressing EM-related challenges
+in VLSI design.
 
 % \clearpage 
 \bibliographystyle{IEEEtran}
