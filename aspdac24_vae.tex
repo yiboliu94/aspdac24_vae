@@ -86,30 +86,55 @@
 \maketitle
   
 \begin{abstract}
-  Electromigration (EM) is the top failure mechanism for copper-based
-  interconnected for today's and future nanometer chip technologies.
-  The on-chip power grids have to be properly design to ensure the EM
-  life time. Most of the existing approach is based on the sensitivity
-  based optimizations and one critical issue is the high computational
-  costs of full-chip EM-aware IR drop analysis to compute the
-  sensitivity of the fixing target with respect to the wire
-  geometry. In this paper, we propose a fast full-chip power grid
-  EM-aware IR drop prediction and fixing framework. First, we adopt
-  the variational autoencoder (VAE)-based model, called {\it GridVAE},
-  to predict the EM-aware IR drops, which are more accurate and thus
-  training data-efficient than existing generative adversarial network
-  (GAN) based approaches. On top of this, we apply a sequence of
-  linear programming based optimization framework to size the wires by
-  leveraging the auto differential feature of the deep neural networks
-  to compute the sensitivity information very efficiently.  The
-  numerical results show that VAE is better than recently proposed
-  recently proposed GAN-based model with 40$\%$ RMSE reduction.
-  Further on the power grid EM-aware IR drop fixing, we show the
-  proposed VAE-accelerated method can lead up to 80X (at least one
-  order of magnitude) speedup over the conventional SLP-based method
-  on synthesized power grid benchmarks from ARM Cortex-M0 processor
-  design.
+  % Electromigration (EM) is the top failure mechanism for copper-based
+  % interconnected for today's and future nanometer chip technologies.
+  % The on-chip power grids have to be properly design to ensure the EM
+  % life time. Most of the existing approach is based on the sensitivity
+  % based optimizations and one critical issue is the high computational
+  % costs of full-chip EM-aware IR drop analysis to compute the
+  % sensitivity of the fixing target with respect to the wire
+  % geometry. In this paper, we propose a fast full-chip power grid
+  % EM-aware IR drop prediction and fixing framework. First, we adopt
+  % the variational autoencoder (VAE)-based model, called {\it GridVAE},
+  % to predict the EM-aware IR drops, which are more accurate and thus
+  % training data-efficient than existing generative adversarial network
+  % (GAN) based approaches. On top of this, we apply a sequence of
+  % linear programming based optimization framework to size the wires by
+  % leveraging the auto differential feature of the deep neural networks
+  % to compute the sensitivity information very efficiently.  The
+  % numerical results show that VAE is better than recently proposed
+  % recently proposed GAN-based model with 40$\%$ RMSE reduction.
+  % Further on the power grid EM-aware IR drop fixing, we show the
+  % proposed VAE-accelerated method can lead up to 80X (at least one
+  % order of magnitude) speedup over the conventional SLP-based method
+  % on synthesized power grid benchmarks from ARM Cortex-M0 processor
+  % design.
 
+
+  Electromigration (EM) remains the primary failure mechanism for
+  copper-based interconnects in today's and future nanometer chip
+  technologies. To ensure the longevity of on-chip power grids,
+  effective EM-aware IR drop analysis is crucial. However, the
+  existing sensitivity-based optimization approaches suffer from high
+  computational costs, particularly for full-chip analysis.  In this
+  paper, we propose a novel and efficient framework for EM-aware IR
+  drop prediction and fixing in full-chip power grids. Our approach
+  leverages a variational autoencoder (VAE)-based model, known as {\it
+    GridVAE}, for accurate EM-aware IR drop predictions. Compared to
+  traditional generative adversarial network (GAN) based methods, our
+  VAE-based model offers improved accuracy and data efficiency.
+  Building on the accurate predictions of GridVAE, we appliy sequence
+  of linear programming-based optimizations to efficiently size the
+  wires. This optimization framework takes advantage of the
+  auto-differential capabilities of deep neural networks,
+  significantly reducing computation time for sensitivity information
+  computation. Our numerical results demonstrate the superiority of
+  VAE over recently proposed GAN-based models, showcasing a remarkable
+  40\% reduction in RMSE. Moreover, our proposed VAE-accelerated
+  method achieves up to an 80X speedup (at least one order of
+  magnitude) compared to conventional SLP-based methods for power grid
+  EM-aware IR drop fixing. We validate our approach using synthesized
+  power grid benchmarks from ARM Cortex-M0 processor design.
 \end{abstract}
  
 \input intro.tex

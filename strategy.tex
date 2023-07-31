@@ -77,9 +77,6 @@ Next the $\it{EMspice}$ provides the EM-aware electrical information from the re
 Eventually we parse these EM-aware electrical features and the topological information for the circuit layout, and send it to our VAE-based model for the training and testing. 
 %in the format of wire segment resistance vectors, which are mentioned in Eq.~\eqref{eq:mna}. 
 
-
-
-
 \begin{table}[!htbp]
 	\begin{center}
 		\caption{Power Grid Designs Detail}
@@ -103,7 +100,7 @@ Eventually we parse these EM-aware electrical features and the topological infor
 
 
 
-\subsection{fast power grid EM-aware IR drop fixing framework }
+\subsection{Fast power grid EM-aware IR drop fixing framework }
 \label{subsec:formulation}
 
 The structure of the combined VAE-based model and the proposed workflow of the fixing strategy is shown in Fig.~\ref{fig:flow}. 
@@ -123,7 +120,7 @@ The structure of the combined VAE-based model and the proposed workflow of the f
 	\label{fig:flow}
 \end{figure}
 
-\subsubsection{problem formulation}
+\subsubsection{Problem formulation}
 \label{subsubsec:formulation}
 The proposed method intends to solve the following problem: 
 Given the power grid information at T=0, our VAE-based model has predict the EM-aware IR drop the target aging life time \textit{\textbf{t}} in ~\ref{subsec:vae}.The power grid has EM-induced IR drop violations and demands fixing if it has node voltage drop \textit{\textbf{v}}  above the threshold $V_{th}$.
@@ -176,7 +173,7 @@ $ \dfrac{\partial v(t, s)}{\partial s}$ is the $n\times n_{t}$ \textit{Jacobian}
 
 
 
-\subsubsection{Fast Gradient acquisition}
+\subsubsection{Fast gradient computation via auto differentation}
 PyTorch auto differentiation can provide the gradient of output node voltages to the input wire segment conductances, which is $ \dfrac{\partial v(t, s)}{\partial g}$. Then we can easily get \eqref{eq:J_matrix} by chain rule, as each power grid tree $g_{i}$ has its own resizing factor $s_{i}$ and will not be infected by other resizing factors:
 \begin{equation}
 	\label{eq:chain_rule}
@@ -192,8 +189,6 @@ PyTorch auto differentiation can provide the gradient of output node voltages to
 	\end{aligned}
 \end{equation}
 
-
-
 As Comparison, we compare to the sensitivity ~\cite{Sukharev:2019pg}
 For a the power grid network represented by the node conductance matrix $ \textit{G(t,s)}$, we can write its model in the format of the following equation:
 \begin{equation}
@@ -207,7 +202,6 @@ And the sensitivity
 	\label{eq:dVs}
 	\dfrac{\partial v(t,s)}{\partial s_{k}} = -G^{-1}\cdot \dfrac{\partial G(t,s)}{\partial s_{k}}  \cdot G^{-1}\cdot j(t)
 \end{equation}
-
 
 To solve the above equation and obtain $ \frac{\partial v(t,s)}{\partial s_{k}}$, one has to first construct the sparse matrices G and $\frac{\partial G(t,s)}{\partial s_{k}}$ for all $k$, and then perform matrix solving. 
 Each column of the  \textit{Jacobian} matrix \eqref{eq:J_matrix} has to be calculated through the process of \eqref{eq:dVs} for the corresponding power grid tree. Hence building such a \textit{Jacobian} matrix in traditional method is computational expensive.
