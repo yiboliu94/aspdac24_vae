@@ -4,15 +4,15 @@
 The experiment is set up on a Linux server with 2 Xeon E5-2698v2 processors and Nvidia Titan X RTX GPU. 
 The applied VAE-based model is built with the PyTorch package. 
 The linear programming-based power grid fixing part is implemented in Python.
-The test cases are randomly generated following the IBM-format, based on the topology we extract from the real design and the constraints that the user defines.
-It consists of VDD power nets, VSS ground nets, and two external supplies.
-The output from power grid file parser is consistent with the IBM power grid benchmarks \cite{Nassif:ASPDAC'08}.
-We have three different topology designs and generate large amount of IBM-format power grid networks to ensure different workloads can be tested and verified. 
+The test cases are randomly generated following the IBM format, based on the topology we extract from the real design and the constraints that the user defines.
+It comprises of VDD power nets, VSS ground nets, and two external supplies.
+The power grid file parser output is consistent with the IBM power grid benchmarks \cite{Nassif:ASPDAC'08}.
+We have three different topology designs and generate large amounts of IBM format power grid networks to ensure different workloads can be tested and verified. 
 
 Design 1 comes from Cortex-M0 DesignStart processor, which implements ARMv6-M 32-bit architecture and is routed and placed using IC Compiler with 32/28nm Generic Library from Synopsys. 
-The Cortex power grid consists of two layers and one thousand interconnect trees, and shown in Fig.~\ref{fig:icc2pg},  and Fig.~\ref{fig:genpg} shows the voltage drop from the same power grid and the unit is mV.
-Design 2 and Design 3 follow the similar pattern and the detailed information is in Table.~\ref{table:pg_detail}.
-To train the model, each topology needs its own dataset containing 10000 pairs of samples  (workloads and aging time, EM-induced IR drop). The maximum allowable IR drop is set to $5\% \ V_{dd}$ and the target lifetime $T$ is set to 10 years. 
+The Cortex power grid consists of two layers and one thousand interconnect trees, as shown in Fig.~\ref{fig:icc2pg}. Fig.~\ref{fig:genpg} shows the voltage drop from the same power grid, the unit is mV.
+Design 2 and Design 3 follow a similar pattern, the detailed information is in Table.~\ref{table:pg_detail}.
+To train the model, each topology dataset contains 10000 pairs of samples  (workloads and aging time, EM-aware IR drop). The maximum allowable IR drop is set to $5\% \ V_{dd}$ and the target lifetime $T$ is set to 10 years. 
 
 
 
@@ -48,9 +48,8 @@ We implemented the excessive linear programming method in~\cite{Sukharev:2019pg}
 		\resizebox{0.48\textwidth}{!}{
 			\begin{tabular}{| c | c | c | c | c | c | c | }
 				\hline 	
-				{} &{} &\multicolumn{2}{c|} {SLP
-                                         method~\cite{Sukharev:2019pg}}
-                          & \multicolumn{2}{c|} {{\it GridVae}-accelerated SLP} &{} \\ 
+				{} &{} &\multicolumn{2}{c|} {naive SLP method~\cite{Sukharev:2019pg}}
+                          & \multicolumn{2}{c|} {{\it GridVAE}-accelerated SLP} &{} \\ 
 				\cline{3-6} \multirow{-2}{*}{Circuit} & \multirow{-2}{*}{PG Size} & {Area Increase} & {Time(s)}   &{Area Increase} & {Time (s)} & \multirow{-2}{*}{Speed up}  \\  [4pt]
 				\hline 
 				\hline 

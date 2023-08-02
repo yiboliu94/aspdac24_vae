@@ -116,17 +116,16 @@
   technologies. To ensure the longevity of on-chip power grids,
   effective EM-aware IR drop analysis is crucial. However, the
   existing sensitivity-based optimization approaches suffer from high
-  computational costs, particularly for full-chip analysis.  In this
-  paper, we propose a novel and efficient framework for EM-aware IR
-  drop prediction and fixing in full-chip power grids. Our approach
-  leverages a variational autoencoder (VAE)-based model, named as {\it
-    GridVAE}, for accurate EM-aware IR drop predictions. Compared to
-  traditional generative adversarial network (GAN) based methods, our
+  computational costs, particularly for full-chip analysis.  This paper proposes a novel and efficient framework for EM-aware IR drop prediction and fixing in full-chip power grids.
+   Our approach
+  leverages a variational autoencoder (VAE)-based model named {\it
+    GridVAE} for accurate EM-aware IR drop predictions. Compared to
+  state-of-the-art generative adversarial network (GAN) based methods, our
   VAE-based model offers improved accuracy and data efficiency.
-  Building on the accurate predictions of GridVAE, we appliy sequence
+  Building on the accurate predictions of GridVAE, we apply the sequence
   of linear programming-based optimizations to efficiently size the
   wires. This optimization framework takes advantage of the
-  auto-differential capabilities of deep neural networks,
+  auto-differential capabilities of neural networks,
   significantly reducing computation time for sensitivity information
   computation. Our numerical results demonstrate the superiority of
   VAE over recently proposed GAN-based models, showcasing a remarkable
