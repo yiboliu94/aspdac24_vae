@@ -2,7 +2,7 @@
 \label{sec:results}
 \subsection{Experiment setup}
 The experiment is set up on a Linux server with 2 Xeon E5-2698v2 processors and Nvidia Titan X RTX GPU. 
-The applied VAE-based model is built with the PyTorch package. 
+The GridVAE is built with the PyTorch package. 
 The linear programming-based power grid fixing part is implemented in Python.
 The test cases are randomly generated following the IBM format, based on the topology we extract from the real design and the constraints that the user defines.
 It comprises of VDD power nets, VSS ground nets, and two external supplies.
@@ -12,7 +12,7 @@ We have three different topology designs and generate large amounts of IBM forma
 Design 1 comes from Cortex-M0 DesignStart processor, which implements ARMv6-M 32-bit architecture and is routed and placed using IC Compiler with 32/28nm Generic Library from Synopsys. 
 The Cortex power grid consists of two layers and one thousand interconnect trees, as shown in Fig.~\ref{fig:icc2pg}. Fig.~\ref{fig:genpg} shows the voltage drop from the same power grid, the unit is mV.
 Design 2 and Design 3 follow a similar pattern, the detailed information is in Table.~\ref{table:pg_detail}.
-To train the model, each topology dataset contains 10000 pairs of samples  (workloads and aging time, EM-aware IR drop). The maximum allowable IR drop is set to $5\% \ V_{dd}$ and the target lifetime $T$ is set to 10 years. 
+To train the model, each topology dataset contains 10000 pairs of samples  (workloads and aging time, EM-aware IR drop). The maximum allowable IR drop is set to $5\% \ V_{dd}$ and the target lifetime $\textit{T}$ is set from 0 to 10 years. 
 
 
 
@@ -22,18 +22,19 @@ We implemented the excessive linear programming method in~\cite{Sukharev:2019pg}
 
 \begin{table}[!h]
 	\begin{center} 
-		\caption{Prediction results of VAE model and GAN model on different designs}
+		\caption{Prediction accuracy of GridVAE vs state-of-the-art GAN-based model}
 		\label{table: Model_RMSE_Compare}
 		\center
 			\begin{tabular}{| c| c | c | c | }
 				\hline 
 				{} &{} &\multicolumn{2}{c|} {RMSE (mV)}  \\
 				\cline{3-4}
-				\multirow{-2}{*}{Circuit}   &\multirow{-2}{*}{\# nodes} &{ GAN}  &{ VAE}   \\ \hline 
+				\multirow{-2}{*}{Circuit}   &\multirow{-2}{*}{\# nodes} &{ GAN-based model}  &{ GridVAE}   \\ \hline 
 				\hline 
 				Design1  &1024      &5.697 	& 3.144 	 \\ \hline
 				Design2  &4096      &6.100	&  3.519	\\ \hline
-				Design3  &16384   &3.922	        &  3.462	\\ \hline			
+				Design3  &16384    &3.922	&  3.462	\\ \hline
+				Design4  &65536    &7.583	&  4.371	\\ \hline
 			\end{tabular}
 	\end{center}
 	\vspace{-0.1in}
@@ -63,12 +64,14 @@ We implemented the excessive linear programming method in~\cite{Sukharev:2019pg}
 				\hline
 				Design3-PG5  &16384   &2.85  \% 	& 922    &2.14\%	& 13.7  & 67.2    \\	[5pt]
 				\hline
+				Design4-PG6  &65536   &0.38   \% 	& 5627    & 0.57 \%	&40.45   & 139.1    \\	[5pt]
+				\hline
 			\end{tabular}
 		}
 	\end{center}
 	\vspace{-0.1in}
 \end{table}
-      The table \ref{table: Model_RMSE_Compare}  compares the EW-aware IR-drop prediction accuracy between the proposed VAE-based model and the state-of-the-art GAN-based model, the unit is mV. Results shows we can reduce up to 40\% RMSE. 
+      The table \ref{table: Model_RMSE_Compare}  compares the EW-aware IR drop prediction accuracy between the proposed GridVAE and the state-of-the-art GAN-based model, the unit is mV. Results shows we can reduce up to 40\% RMSE. 
       The table \ref{table:results} shows the comparison of our VAE-accelerated power grid IR drop fixing strategy versus the existing SLP-based method~\cite{Sukharev:2019pg} . The last column indicate
       the proposed method has the speedup over~\cite{Sukharev:2019pg}
       As we can see that both SLP-based

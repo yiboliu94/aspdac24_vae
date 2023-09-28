@@ -49,8 +49,8 @@
 
 \newcommand{\rev}[1]{\textcolor{red}{#1}}
 
-\renewcommand{\baselinestretch}{0.93}
-
+%\renewcommand{\baselinestretch}{0.93}
+\renewcommand{\baselinestretch}{1}
 % \newenvironment{packedenum}{
 % \begin{enumerate}
 % \setlength{\itemsep}{1pt}
@@ -112,26 +112,15 @@
   Electromigration (EM) remains the primary failure mechanism for
   copper-based interconnects in today's and future nanometer chip
   technologies. To ensure the longevity of on-chip power grids,
-  effective EM-aware IR drop analysis is crucial. However, the
-  existing sensitivity-based optimization approaches suffer from high
-  computational costs, particularly for full-chip analysis.  This paper proposes a novel and efficient framework for EM-aware IR drop prediction and fixing in full-chip power grids.
-   Our approach
-  leverages a variational autoencoder (VAE)-based model named {\it
-    GridVAE} for accurate EM-aware IR drop predictions. Compared to
-  state-of-the-art generative adversarial network (GAN) based methods, our
-  VAE-based model offers improved accuracy and data efficiency.
-  Building on the accurate predictions of GridVAE, we apply the sequence
-  of linear programming-based optimizations to efficiently size the
-  wires. This optimization framework takes advantage of the
-  auto-differential capabilities of neural networks,
-  significantly reducing computation time for sensitivity information
-  computation. Our numerical results demonstrate the superiority of
-  VAE over recently proposed GAN-based models, showcasing a remarkable
-  40\% reduction in RMSE. Moreover, our proposed VAE-accelerated
-  method achieves up to an 80X speedup (at least one order of
-  magnitude) compared to conventional SLP-based methods for power grid
-  EM-aware IR drop fixing. We validate our approach using synthesized
-  power grid benchmarks from ARM Cortex-M0 processor design.
+  effective EM-aware IR drop analysis is crucia. However, the
+  existing power grid optimization approaches suffer high
+  computational costs from the full-chip EM-aware IR drop analysis and sensitivity computation.
+  This paper proposes a novel and efficient framework for full-chip power grid EM-aware IR drop prediction and fixing framework.
+ We developed a conditional VAE-based framework, named {\it GridVAE}, for fast and accurate EM-aware IR drop prediction and full-chip power grid fixing. Compared to the state-of-the-art generative adversarial network (GAN)-based methods, our GridVAE model offers a remarkable 40\% reduction in prediction RMSE on synthesized power grid benchmarks from ARM Cortex-M0 processor design.
+  Building on the accurate EM-aware IR drop predictions and fast acquired sensitivities, we apply the sequence
+  of linear programming-based optimizations to efficiently size the wires.
+  %significantly reducing computation time for sensitivity information computation. 
+  Our proposed GridVAE method achieves up to an 80X speedup (at least one order of magnitude) compared to conventional SLP-based methods for power grid EM-aware IR drop fixing. 
 \end{abstract}
  
 \input intro.tex
@@ -158,15 +147,9 @@
 % synthesized power grid benchmarks from ARM Cortex-M0 processor design.
 
 
-In conclusion, our work introduces a novel VAE-based full-chip EM-aware IR drop estimation model, referred to as {\it GridVAE},  tailored specifically for on-chip power grid networks. 
-Leveraging PyTorch automatic differentiation, {\it GridVAE} allows rapid
-sensitivity computations of the target cost function concerning wire
-geometries, enabling accelerated power grid fixing through a recently
-proposed linear programming-based optimization framework. The
-numerical results attest to the superiority of {\it GridVAE} over recently
-proposed GAN-based models, with a notable 40\% reduction in RMSE.
-Additionally, our GridVAE-accelerated method
-demonstrates an impressive up to 80X speedup (at least one order of
+In conclusion, our work introduced a novel full-chip EM-aware IR drop estimation model, referred to as {\it GridVAE},  tailored specifically for on-chip power grid EM-aware IR drop prediction and rapid sensitivity computations, and accelerated the power grid fixing through a recently proposed linear programming-based optimization framework. 
+The  {\it GridVAE} reduced 40\% RMSE over the recently proposed state-of-the-art GAN-based model on full-chip EM-aware IR drop prediction. 
+Additionally, our GridVAE-accelerated method demonstrates an impressive up to 80X speedup (at least one order of
 magnitude) compared to conventional SLP-based approaches when applied
 to synthesized power grid benchmarks from ARM Cortex-M0 processor
 design. These findings underscore the potential of {\it GridVAE} as a

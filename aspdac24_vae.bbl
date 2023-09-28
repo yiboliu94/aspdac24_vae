@@ -169,6 +169,17 @@ H.~Zhou, Y.~Sun, Z.~Sun, H.~Zhao, and S.~X.-D. Tan,
   plus 0.5em minus 0.4em\relax New York, NY: {IEEE Press}, Jan. 2018, pp.
   399--404.
 
+\bibitem{Goodfellow:NIPS'14}
+\BIBentryALTinterwordspacing
+I.~Goodfellow, J.~Pouget-Abadie, M.~Mirza, B.~Xu, D.~Warde-Farley, S.~Ozair,
+  A.~Courville, and Y.~Bengio, ``Generative adversarial nets,'' in
+  \emph{Advances in Neural Information Processing Systems 27}, Z.~Ghahramani,
+  M.~Welling, C.~Cortes, N.~D. Lawrence, and K.~Q. Weinberger, Eds.\hskip 1em
+  plus 0.5em minus 0.4em\relax Curran Associates, Inc., 2014, pp. 2672--2680.
+  [Online]. Available:
+  \url{http://papers.nips.cc/paper/5423-generative-adversarial-nets.pdf}
+\BIBentrySTDinterwordspacing
+
 \bibitem{Fu:arxiv'19}
 R.~Fu, J.~Chen, S.~Zeng, Y.~Zhuang, and A.~Sudjianto, ``{Time Series Simulation
   by Conditional Generative Adversarial Net},'' \emph{arXiv e-prints}, p.
