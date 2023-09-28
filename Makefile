@@ -6,7 +6,7 @@
 #  in the makefile: dvi, pdf, paper, commit, update, clean 
 #  The default command is 'dvi' when you type 'make' only.
 #
-PAPER = aspdac24_vae
+PAPER = isqed_vae
 #
 FORMAT = letter
 LATEX  = latex
