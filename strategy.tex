@@ -8,11 +8,11 @@
 \label{subsec:vae_intro}
 
 CNNs with an encoder-decoder structure are widely used in image generation tasks. 
- This architecture forms the basis for several generative models, including the simplest form AutoEncoders (AEs), Generative Adversarial Networks (GANs), and Variational AutoEncoders (VAEs)~\cite{Diederik:arxiv'22}. 
-GAN ~\cite{Goodfellow:NIPS'14} model introduces an additional binary output CNN called \textit{discriminator} only during the training stage to improve the result quality, and adopts the same AE structure for result generation.Fig.\ref{fig:ae}  shows AEs (GANs) encode input $\textbf{x}$ to low-dimensional latent variables $\textbf{z}$ by the encoder and then decode the result by the decoder.
+ This architecture forms the basis for several generative models, including the simplest form AE, GAN, and VAE~\cite{Diederik:arxiv'22}. 
+GAN ~\cite{Goodfellow:NIPS'14} model introduces an additional binary output CNN called \textit{discriminator} only during the training stage to improve the result quality, and adopts the same AE structure for result generation. Fig.~\ref{fig:ae} shows AE (as well as GAN) will encode input $\textbf{x}$ to low-dimensional latent variables $\textbf{\textit{z}}$ by the encoder and then decode the result by the decoder.
 
 
-VAE, as shown in Fig.\ref{fig:vae}, is a unique generative model derived from the standard AE. Compared to the traditional AE structure, VAE does not encode the input into a discrete point, but a distribution over the latent space $Q(Z|X)$ with multivariate Gaussian prior. This enables the VAEs to have a better latent space interpretability.
+VAE, as shown in Fig.~\ref{fig:vae}, is a unique generative model derived from the standard AE. Compared to the traditional AE structure, VAE does not encode the input into a discrete point, but a distribution over the latent space $Q(Z|X)$ with multivariate Gaussian prior. This enables the VAEs to have a better latent space interpretability.
 %which is used to generate new data similar to the input data it's trained on. 
 %This step is crucial to the VAE's characteristics over AE and AE-based GAN models, such as latent space  interpretability, and training stability.
 %which means that the latent space is smooth and interpretable, enabling ability to interpolate between different points in the latent space and generate new samples that exhibit a smooth transition between the characteristics of the original points. On the other hand, AE does not explicitly enforce such a structure, making the latent space less interpretable and interpolations might not always produce meaningful outputs. 
