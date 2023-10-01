@@ -18,7 +18,7 @@ To train the model, each topology dataset contains 10000 pairs of samples  (work
 
 
 \subsection{The result and performance}
-We implemented the excessive linear programming method in~\cite{Sukharev:2019pg} and our proposed method for comparison. 
+We also implemented the GAN-based model~\cite{ZhouJin:ICCAD'20} for EM-aware IR drop prediction comparison, and the excessive linear programming method in~\cite{Sukharev:2019pg} for power grid fixing comparison. 
 
 \begin{table}[!h]
 	\begin{center} 
@@ -29,7 +29,7 @@ We implemented the excessive linear programming method in~\cite{Sukharev:2019pg}
 				\hline 
 				{} &{} &\multicolumn{2}{c|} {RMSE (mV)}  \\
 				\cline{3-4}
-				\multirow{-2}{*}{Circuit}   &\multirow{-2}{*}{\# nodes} &{ GAN-based model}  &{ GridVAE}   \\ \hline 
+				\multirow{-2}{*}{Circuit}   &\multirow{-2}{*}{\# nodes} &{ GAN-based model\cite{ZhouJin:ICCAD'20}}  &{ GridVAE}   \\ \hline 
 				\hline 
 				Design1  &1024      &5.697 	& 3.144 	 \\ \hline
 				Design2  &4096      &6.100	&  3.519	\\ \hline

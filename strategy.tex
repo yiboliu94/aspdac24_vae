@@ -39,7 +39,7 @@ Building upon the foundation of VAEs,  we propose to adopt the CVAE as the backb
 
 \begin{figure*}[h!]
 	\centering
-	\includegraphics[width=1.8\columnwidth]{./figs/vae_detail.eps}
+	\includegraphics[width=1.9\columnwidth]{./figs/vae_detail.eps}
 	\caption{The architecture of the proposed GridVAE for EM-aware IR drop prediction} 
 	\label{fig:VAE_architecture}
 \end{figure*}
@@ -118,10 +118,10 @@ Eventually, we parse these EM-aware electrical features and the topological info
 
 
 
-\subsection{Fast power grid EM-aware IR drop fixing framework }
+\subsection{Fast Power Grid EM-Aware IR Drop Fixing Framework }
 \label{subsec:formulation}
 
-The proposed GridVAE-accelerated PDN IR drop fixing strategy's workflow is shown in Fig.~\ref{fig:flow}. 
+The workflow of the proposed GridVAE-accelerated IR drop fixing strategy is shown in Fig.~\ref{fig:flow}. 
 
 %\begin{figure*}[h!]
 %	\centering
@@ -161,8 +161,8 @@ The node IR drop $v(t,s)$ is the voltage difference between the power grid inter
 \subsubsection{Programming-based optimization}
 \label{subsubsec:slp_framework}
 
-As we mentioned in ~\ref{subsubsec:formulation}, the EM-aware PG node voltage drop $v(t,s)$ is a nonlinear function to $s$ at aging time $t$. Hence \eqref{eq:prob_formulation} is a nonlinear optimization problem. 
-We solve it by a stepping strategy, in which we linearize the voltage drop at the current latest solution point by Taylor's expansion \eqref{eq:v_taylor_expand} and solve it with linear programming (LP) solver. We repeat this operation until the power grid has no EM-aware IR drop violation.
+As we mentioned in ~\ref{subsubsec:formulation}, the EM-aware PG node voltage drop $\textit{v(t,s)}$ as the constraint is a nonlinear function to $\textit{\textbf{s}}$ at aging time $\textit{t}$. Hence \eqref{eq:prob_formulation} is a nonlinear optimization problem. 
+We solve it by a stepping strategy, in which we linearize the voltage drop at the current latest solution point by Taylor's expansion \eqref{eq:v_taylor_expand} and solve \eqref{eq:prob_formulation} with linear programming (LP) solver. We repeat this operation until the power grid has no EM-aware IR drop violation.
 
 \begin{equation}
 	\label{eq:v_taylor_expand}
@@ -190,8 +190,9 @@ $ \dfrac{\partial v(t, s)}{\partial s}$ is the $n\times n_{t}$ \textit{Jacobian}
 
 
 
-\subsubsection{Fast gradient computation via auto differentiation}
-PyTorch auto differentiation can provide the gradient of output node voltages to the input wire segment conductances, which is $ \dfrac{\partial v(t, s)}{\partial g}$. Then we can quickly get \eqref{eq:J_matrix} by chain rule, as each power grid tree $g_{i}$ has its resizing factor $s_{i}$ and will not be infected by other resizing factors:
+\subsubsection{Fast sensitivity computation}
+
+The sensitivity $ \dfrac{\partial v(t, s)}{\partial s}$ in  \eqref{eq:v_taylor_expand} describes how the nodes voltage $\textit{\textbf{v}}$ at $\textit{T}= t$ will be affected by resizing the wires. We utilize the by-product of the GridVAE model to further accelerate the sensitivity computation. The GridVAE can provide the gradient of output node voltages to the input wire segment conductances by gradient backpropagation after the GridVAE inference process, which is $ \dfrac{\partial v(t, s)}{\partial g}$. Then we can quickly get \eqref{eq:J_matrix} by chain rule, as each power grid tree $g_{i}$ has its resizing factor $s_{i}$ and will not be infected by other resizing factors:
 \begin{equation}
 	\label{eq:chain_rule}
 	\begin{aligned}
@@ -206,13 +207,13 @@ PyTorch auto differentiation can provide the gradient of output node voltages to
 	\end{aligned}
 \end{equation}
 
-As a comparison to the sensitivity acquisition by matrix solving method~\cite{Sukharev:2019pg}, we briefly review its main steps.
+As a comparison to the conventional sensitivity acquisition by matrix solving method~\cite{Sukharev:2019pg}, we briefly review its main steps.
 For a power grid network represented by the node conductance matrix $ \textit{G(t,s)}$, it can be written in the following format~\eqref{eq:gv=i}:
 \begin{equation}
 	\label{eq:gv=i}
 	G(t,s)\cdot v(t,s)= j(t)
 \end{equation}
-where $j(t)$  is $n\times 1$ vectors representing and node current vector for the power grid.
+where $\textbf{j(t)}$  is an $n\times 1$ vector represents the power grid nodes current vector.
 
 And the sensitivity is calculated as followed~\eqref{eq:dVs}: 
 \begin{equation}
@@ -220,7 +221,7 @@ And the sensitivity is calculated as followed~\eqref{eq:dVs}:
 	\dfrac{\partial v(t,s)}{\partial s_{k}} = -G^{-1}\cdot \dfrac{\partial G(t,s)}{\partial s_{k}}  \cdot G^{-1}\cdot j(t)
 \end{equation}
 
-To solve the above equation and obtain $ \frac{\partial v(t,s)}{\partial s_{k}}$, one must first construct the sparse matrices G and $\frac{\partial G(t,s)}{\partial s_{k}}$ for all $k$, then perform matrix solving. 
+To solve the above equation and obtain $ \frac{\partial v(t,s)}{\partial s_{k}}$, one must first construct the sparse matrices $\textit{G}$ and $\frac{\partial G(t,s)}{\partial s_{k}}$ for all $k$, then perform matrix solving. 
 Each column of the \textit{Jacobian} matrix \eqref{eq:J_matrix} has to be calculated through the process of \eqref{eq:dVs} for the corresponding power grid tree. Hence building such a \textit{Jacobian} matrix in the traditional method is computationally expensive.
 
 
