@@ -123,11 +123,19 @@ No.CCF-2305437.
   technologies. To ensure the longevity of on-chip power grids,
   effective EM-aware IR drop analysis is crucial. However, the
   existing power grid optimization approaches suffer high
-  computational costs from the full-chip EM-aware IR drop analysis and sensitivity computation.
-  This paper proposes a novel and efficient framework for full-chip power grid EM-aware IR drop prediction and fixing framework.
- We developed a conditional VAE-based framework, named {\it GridVAE}, for fast and accurate EM-aware IR drop prediction and full-chip power grid fixing. Compared to the state-of-the-art generative adversarial network (GAN)-based methods, our GridVAE model offers a remarkable 40\% reduction in prediction RMSE on synthesized power grid benchmarks from ARM Cortex-M0 processor design.
-  Building on the accurate EM-aware IR drop predictions and fast acquired sensitivities, we apply the sequence
-  of linear programming-based optimizations to efficiently size the wires.
+  computational costs from the full-chip EM-aware IR drop analysis and
+  sensitivity computation.  This paper proposes a novel and efficient
+  framework for full-chip power grid EM-aware IR drop prediction and
+  fixing framework.  We developed a conditional VAE-based framework,
+  named {\it GridVAE}, for fast and accurate EM-aware IR drop
+  prediction and full-chip power grid fixing. Compared to the
+  state-of-the-art generative adversarial network (GAN)-based methods,
+  our GridVAE model offers a remarkable 40\% reduction in prediction
+  RMSE on synthesized power grid benchmarks from ARM Cortex-M0
+  processor design.  Building on the accurate EM-aware IR drop
+  predictions and fast acquired sensitivities, we apply the sequence
+  of linear programming-based optimizations to efficiently size the
+  wires.
   %significantly reducing computation time for sensitivity information computation. 
   Our proposed GridVAE method achieves up to an 140X speedup (at least one order of magnitude) compared to conventional SLP-based methods for power grid EM-aware IR drop fixing. 
 \end{abstract}
