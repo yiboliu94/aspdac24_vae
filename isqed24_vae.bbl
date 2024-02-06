@@ -161,6 +161,12 @@ V.~A. Chhabria, V.~Ahuja, A.~Prabhu, N.~Patil, P.~Jain, and S.~S. Sapatnekar,
   networks},'' in \emph{{Proceedings of the 26th Asia and South Pacific Design
   Automation Conference}}, 2021, pp. 690--696.
 
+\bibitem{Chen:TCAD'23}
+L.~Chen, W.~Jin, M.~Kavousi, S.~Lamichhane, and S.~X.-D. Tan, ``Linear time
+  electromigration analysis based on physics-informed sparse regression,''
+  \emph{IEEE Transactions on Computer-Aided Design of Integrated Circuits and
+  Systems}, vol.~42, no.~11, pp. 4126--4138, 2023.
+
 \bibitem{ZhouSun:ASPDAC'18}
 H.~Zhou, Y.~Sun, Z.~Sun, H.~Zhao, and S.~X.-D. Tan,
   ``{Electromigration-Lifetime Constrained Power Grid Optimization Considering

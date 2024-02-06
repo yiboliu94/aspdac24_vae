@@ -127,21 +127,21 @@ The workflow of the proposed GridVAE-accelerated IR drop fixing strategy is show
 %	\centering
 %	\captionsetup{justification=centering, margin=3cm}
 %	\includegraphics[width=1.2\columnwidth]{./figs/flow.eps}
-%	\caption{The proposed framework of VAE-accelerated power gird fixing method.}
+%	\caption{The proposed framework of VAE-accelerated power grid fixing method.}
 %	\label{fig:flow}
 %\end{figure*}
 
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.98\columnwidth]{./figs/flow.eps}
-	\caption{Framework of power gird IR drop fixing method accelerated by the GridVAE.}
+	\caption{Framework of power grid IR drop fixing method accelerated by the GridVAE.}
 	\label{fig:flow}
 \end{figure}
 
 \subsubsection{Problem formulation}
 \label{subsubsec:formulation}
 The proposed method intends to solve the following problem: 
-Given the power grid information at T=0, the GridVAE has predicted the EM-aware IR drop at the target aging lifetime T = \textit{t} and revealed that the power grid has EM-induced IR drop violations demand fixing. IR drop violation means the power grid  has nodes voltage drop \textit{\textbf{v}} above the threshold $V_{th}$.
+Given the power grid information at T=0, the GridVAE has predicted the EM-aware IR drop at the target aging lifetime T = \textit{t} and revealed that the power grid has EM-induced IR drop violations demand fixing. IR drop violation means the power grid  has nodes whose voltage drop \textit{\textbf{v}} are above the threshold $V_{th}$.
 We wish to alleviate the above mentioned EM-aware IR drop failure by resizing the power grid interconnection trees' width with a minimum metal area increase.
 
 The problem can be formulated as:
@@ -174,7 +174,7 @@ where $s^{(i)}$ denotes the current power grid resizing vector and $s^{(i+1)}$ i
 	s^{(i+1)} = s^{(i)} + \delta s 
 \end{equation}
 
-$ \dfrac{\partial v(t, s)}{\partial s}$ is the $n\times n_{t}$ \textit{Jacobian} matrix of $v(t,s)$ with respect to $s$, describes how the node voltage drops at target time $T=t$ respond to the corresponding treewidth rescaling.
+$ \dfrac{\partial v(t, s)}{\partial s}$ is the $n\times n_{t}$ \textit{Jacobian} matrix of $v(t,s)$ with respect to $s$, describes how the node voltage drops at target time $T=t$ respond to the corresponding treewidth rescaling, where n is the total number of nodes. 
 
 \begin{equation}
 	\label{eq:J_matrix}
@@ -192,7 +192,7 @@ $ \dfrac{\partial v(t, s)}{\partial s}$ is the $n\times n_{t}$ \textit{Jacobian}
 
 \subsubsection{Fast sensitivity computation}
 
-The sensitivity $ \dfrac{\partial v(t, s)}{\partial s}$ in  \eqref{eq:v_taylor_expand} describes how the nodes voltage $\textit{\textbf{v}}$ at $\textit{T}= t$ will be affected by resizing the wires. We utilize the by-product of the GridVAE model to further accelerate the sensitivity computation. The GridVAE can provide the gradient of output node voltages to the input wire segment conductances by gradient backpropagation after the GridVAE inference process, which is $ \dfrac{\partial v(t, s)}{\partial g}$. Then we can quickly get \eqref{eq:J_matrix} by chain rule, as each power grid tree $g_{i}$ has its resizing factor $s_{i}$ and will not be infected by other resizing factors:
+The sensitivity $ \dfrac{\partial v(t, s)}{\partial s}$ in  \eqref{eq:v_taylor_expand} describes how the nodes voltage $\textit{\textbf{v}}$ at $\textit{T}= t$ will be affected by resizing the wires. We utilize the by-product of the GridVAE model to further accelerate the sensitivity computation. The GridVAE can provide the gradient of output node voltages to the input wire segment conductances by gradient back propagation after the GridVAE inference process, which is $ \dfrac{\partial v(t, s)}{\partial g}$. Then we can quickly get \eqref{eq:J_matrix} by chain rule, as each power grid tree $g_{i}$ has its resizing factor $s_{i}$ and will not be infected by other resizing factors:
 \begin{equation}
 	\label{eq:chain_rule}
 	\begin{aligned}
